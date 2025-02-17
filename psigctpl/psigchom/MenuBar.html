@@ -1,0 +1,80 @@
+
+<div id="nav">
+    <ul class="sf-menu dropdown"> 
+        <li class="{% if request.path == '/' %}selected{% endif %}"><a class="has_submenu" href="/">INICIO</a>
+            <ul>   
+                {% if not user.is_authenticated %}
+                    <li class="{% if 'url_registuser' in request.path %}selected{% endif %}"><a href="{% url 'url_registuser' %}">Registrarse en el sitio</a></li>
+                    <li class="{% if 'url_loginuser' in request.path %}selected{% endif %}"><a href="{% url 'url_loginuser' %}">Iniciar sesión de usuario</a></li>
+                    <li><a>_________________</a></li>
+                {% endif %}    
+                <li class="{% if 'url_ayuda' in request.path %}selected{% endif %}"><a href="{% url 'url_ayuda' %}">Ayuda</a></li>
+                <li class="{% if 'url_codigo' in request.path %}selected{% endif %}"><a href="{% url 'url_codigo' %}">Código de ética</a></li>
+                {% if user.is_authenticated %}
+                    <li class="{% if 'url_logout' in request.path %}selected{% endif %}"><a href="{% url 'url_logout' %}">finalizar sesión</a></li>
+                {% endif %}      
+                {% if not user.is_authenticated %}
+                    <li class="{% if 'url_contacto' in request.path %}selected{% endif %}"><a href="{% url 'url_contacto' %}">Contactar</a></li>
+                {% endif %}      
+            </ul>  
+        </li> 
+        <li class="{% if 'url_redconoc' in request.path %}selected{% endif %}"><a class="has_submenu" href="{% url 'url_redconoc' %}">Red del Conocimiento</a>
+            <ul>
+                <li class="{% if 'url_noticia' in request.path %}selected{% endif %}"><a href="{% url 'url_noticia' %}">Noticias</a></li>
+                <li class="{% if 'url_evento' in request.path %}selected{% endif %}"><a href="{% url 'url_evento' %}">Eventos</a></li>
+                <li class="{% if 'url_documento' in request.path %}selected{% endif %}"><a href="{% url 'url_documento' %}">Documentos</a></li>
+                <li class="{% if 'url_foro' in request.path %}selected{% endif %}"><a href="{% url 'url_foro' %}">Foros de debate</a></li>
+                <li><a>_________________</a></li>
+                <li class="{% if 'url_areasconoc' in request.path %}selected{% endif %}"><a href="{% url 'url_areasconoc' %}">Areas del conocimiento</a></li>
+                <li class="{% if 'url_expertos' in request.path %}selected{% endif %}"><a href="{% url 'url_expertos' %}">Expertos-Consultores</a></li>
+                {% if user.is_authenticated %}
+                    <li><a>_________________</a></li>
+                    <li class="{% if 'url_demanda' in request.path %}selected{% endif %}"><a href="{% url 'url_demanda' %}">Demanda</a></li>
+                {% endif %} 
+            </ul>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="{% if 'url_reportes' in request.path %}selected{% endif %}"><a class="has_submenu" href="#">Reportes</a>
+                <ul>
+                    <li class="{% if 'url_general' in request.path %}selected{% endif %}"><a href="{% url 'url_general' %}">Generalidades</a></li>
+                    <li><a>_________________</a></li>
+                    <li class="{% if 'url_indproyreg' in request.path %}selected{% endif %}"><a href="{% url 'url_indentidactreg' %}">Indicadores</a></li>
+                    <li class="{% if 'url_evalproyreg' in request.path %}selected{% endif %}"><a href="{% url 'url_evalentidactreg' %}">Evaluaciones</a></li>
+                    <!--li class="{% if 'url_conocasist' in request.path %}selected{% endif %}"><a href="{% url 'url_conocasist' %}">Conocimiento asistido</a></li-->
+                </ul>
+            </li>
+                <li class="{% if 'url_basesdatos' in request.path %}selected{% endif %}" ><a class="has_submenu" href="{% url 'url_basesdatos' %}">Datos</a>
+                    <ul>
+                        <li class="{% if 'url_ejesbd' in request.path %}selected{% endif %}"><a href="{% url 'url_ejesbd' %}">Ejes</a></li>
+                        <li><a>_________________</a></li>
+                        <li class="{% if 'url_oacebd' in request.path %}selected{% endif %}"><a href="{% url 'url_oacebd' %}">Organismos del estado</a></li>
+                        <li class="{% if 'url_progdesabd' in request.path %}selected{% endif %}"><a href="{% url 'url_progdesabd' %}">Programas de desarrollo</a></li>
+                        <li class="{% if 'url_entidactbd' in request.path %}selected{% endif %}"><a href="{% url 'url_entidactbd' %}">Entidad-Actor</a></li>
+                        <!--li class="{% if 'url_proyinvestbd' in request.path %}selected{% endif %}"><a href="">Proyectos de investigación</a></li-->
+                        <li><a>_________________</a></li>
+                        <li class="{% if 'url_usuariobd' in request.path %}selected{% endif %}"><a href="{% url 'url_usuariobd' %}">Usuarios</a></li>
+                    </ul>
+                </li>
+            
+                    <li class="{% if 'url_gestion' in request.path %}selected{% endif %}"><a class="has_submenu" href="{% url 'url_gestion' %}">Gestion</a>
+                        <ul>
+                            <li class="{% if 'url_noticiabd' in request.path %}selected{% endif %}"><a href="{% url 'url_noticiabd' %}">Noticias</a></li>
+                            <li class="{% if 'url_eventobd' in request.path %}selected{% endif %}"><a href="{% url 'url_eventobd' %}">Eventos</a></li>
+                            <li class="{% if 'url_documentobd' in request.path %}selected{% endif %}"><a href="{% url 'url_documentobd' %}">Documentos</a></li>   
+                            <li class="{% if 'url_forobd' in request.path %}selected{% endif %}"><a href="{% url 'url_forobd' %}">Foros</a></li>
+                            <li><a>_________________</a></li>
+                            <li class="{% if 'url_areaconocbd' in request.path %}selected{% endif %}"><a href="{% url 'url_areaconocbd' %}">Áreas de Conocimiento</a></li>
+                            <!--li class="{% if 'url_expertosbd' in request.path %}selected{% endif %}"><a href="{% url 'url_expertosbd' %}">Experticia</a></li-->
+                            
+                        </ul>
+                    </li>
+
+           
+        {% endif %} 
+        <h4>Buscar en el sitio</h4>
+        <form action="" method="POST">
+            <input type="text" id="searchquery" style="width: 200px" name="searchterm" />
+            <input type="submit" id="searchbutton" value="Buscar" class ="btn btn-success" />
+        </form>
+    </ul>   
+</div>

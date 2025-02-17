@@ -1,0 +1,13 @@
+
+    <ul>	
+        <li>
+            <h4 class="h4-green"><span>Enlaces de interés</span></h4>
+            <ul>
+                <li><a href="/" title="INICIO"><strong> Inicio del software</strong></a> </li>
+                <li><a href="{% url 'url_ayuda' %}" title="Ayuda"><strong>Ayuda  al usuario</strong></a></li>
+                <li><a href="{% url 'url_codigo' %}" title="Código de Ética"><strong>Código de ética</strong></a></li>
+                <li><a href="{% url 'url_codigo' %}" title="Red del conocimiento"><strong>Red del conocimento </strong></a></li>
+                {% if not user.is_authenticated %}<li><a href="{% url 'url_contacto' %}" title="Contáctenos"><strong>Envíe sus opiniones</strong></a></li>{% endif %}
+            </ul>
+        </li>
+    </ul>

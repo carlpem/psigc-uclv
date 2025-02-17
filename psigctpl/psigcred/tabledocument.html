@@ -1,0 +1,41 @@
+{% extends 'psigchom/noheaderpage.html' %}
+
+{% load static %}
+
+
+{% block content %}
+    
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a> &raquo;<strong>Documentos</strong></span>
+    </div>
+    <div id="content">
+       
+        {% if documendata %}
+            <div class="row" style="width:98%; padding: 0px 5px 0px 10px"> 
+                {% for doc in documendata %}
+                <div class="col-lg-12" style="margin: 0x auto; padding: 7px">
+                    <div class="card shadow bm-11">
+                        <div class="card-body" style="width:100%;">
+                            <div class="row">
+                                <div class="col-sm-9" style="padding: 0px 5px"> <h3 style="width: 100%">  {{doc.titulo}} </h3> </div>
+                                <div class="col-sm-3" align="left"><a class="btn btn-info" style="margin: 0px 10px;" href="{{doc.archivo.url}}"><p>Abrir documento</p></a></div>
+                            </div>
+                            <p><strong> Breve descripción:</strong> {{doc.resegna}}</p>
+                            <p style="font-size:10px; padding:5px 5px">subido {{doc.creado|date:"d-m-a" }} por: {{doc.autor }} 
+                                {% if doc.autor.municipio %}[{{doc.autor.municipio}} ({{doc.autor.municipio.prov}})].{% endif %}
+                                Entidad-Actor: {{doc.entidactor.nombrecorto }} 
+                            </p>
+                        </div>    
+                    </div>
+                </div> 
+                {% endfor%} 
+            </div><br>
+        {% else %}
+            <div class="card-body" align="center" style="width:70%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> Aún no existen documentos publicados.</strong></div>
+            </div> 
+        {% endif %}
+    </div> 
+</body>     
+{%endblock%}

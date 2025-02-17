@@ -1,0 +1,26 @@
+{% extends 'psigchom/main.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <div id="sub-header">
+        <h2>‘Datos’--procesados->‘información’--seleccionada y relacionada-->‘conocimiento’, </h2>
+    </div>
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<strong>Gestión</strong>
+    </div>
+    <div id="content">
+        <p>Todos los elementos que se visualizan en las opciones del menú "Red de conocimiento" (Noticias, Eventos, Documentos y Foros) son gestinados a partir de los opciones de este apartado. 
+           Cada elemento es accedido a partir de las opciones con nombres similares en el menú para una mejor asociación entre las opciones de cada menú. </p>
+        <p>Para cada edición de la información creada existe la posible modificación o eliminación de su contenido, por tanto, hay que tener en cuenta que toda la información y conocimiento derivada de ella se afectará
+        de algún modo, ya sea borrándolo por completo o quedando contenido sin asignación o huérfano de origen. <br> 
+        Por esta razón cada botón de modificar o eliminar se identificará con color amarillo <button class="btn btn-warning" type="" style="margin: 0px auto; height: 20px; padding: 0px 10px 25px 10px" href=""><p>Editar</p></button>
+        (de averdtencia) o con color rojo <button class="btn btn-danger" type="" style="margin: 0px auto; height: 20px; padding: 0px 10px 25px 10px" href=""><p>Borrar</p></button>(peligro) para llamar la atención del usuario que acceda a estas opciones.
+                   
+        
+    </div>
+    
+{%endblock%}

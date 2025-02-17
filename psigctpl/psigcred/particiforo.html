@@ -1,0 +1,74 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a>&raquo;<a href="{% url 'url_foro'%}">Foros</a>&raquo;<strong>Detalles del foro</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        <div align="right"><a class="btn btn-success" style="margin: 0px 10px; padding: 5px 5px" href="{% url 'url_foro'%}"><p><strong>Regresar a foros...</strong></p></a></div>
+
+        {% if forodata %}
+            <div class="col-lg-15" style="padding: 0.2em 0.5em">
+                <div class="card shadow bm-1">
+                    <div class="card-body" style="">
+                        <h4 style="width: 98%; padding: 5px"><strong><i class="fa fa-underline" >Area del conocimiento:</i></strong> {{forodata.areacon}} </h4>
+                        <p style="padding: 5px"><strong>Moderador: </strong> {{forodata.moderador.first_name}} {{forodata.moderador.last_name}} ({{forodata.moderador.username}})</p>
+                        <p style="padding: 5px"><strong>Tema o pregunta a debatir: </strong></p>
+                        <p> {{forodata.tema}}</p><br><br>
+                        <p>Me gusta:{{forodata.likes.count}}&nbsp;&nbsp; &nbsp;
+                           No me gusta:{{forodata.dlikes.count}}&nbsp;&nbsp;&nbsp;
+                           Intervenciones:{{comentdata.comentarios.count}}</p>
+                    </div>   
+                </div>
+                {% if user.is_authenticated %}
+                    <form method='POST' action="{% url 'url_adicoment' forodata.idforo %}" style="padding: 10px;">
+                        {% csrf_token %}
+                        {{comentform | crispy }}
+                        <button class="btn btn-success"  type="submit" style="height: 20px; padding: 0px 10px 20px 10px" href="{% url 'url_adicoment' forodata.idforo %}"><p>Enviar respuesta</p></button>
+                    </form>
+                {% else %}
+                    <div style="width:98%; color:#356D2E" align="center"><p><strong>"Si desea participar debe &nbsp;&nbsp;<a class="btn btn-outline-success"  style="font-size: 12px; padding: 3px 3px 3px 3px" href="{% url 'url_loginuser' %}">Iniciar sesión</a> o 
+                    <a class="btn btn-outline-success"  style="font-size: 12px; padding: 3px 3px 3px 3px" href="{% url 'url_registuser' %}">Registrarse</a>si no posee cuenta de usuario"</strong></p></div>
+                {% endif %}   
+            
+            {% if comentdata %}
+                <strong>Intervenciones(s):</strong>
+                {% for coment in comentdata %}
+                    {% if coment.estado != "ceptado" %}
+                        <div class="card" style="padding: 0px 5px 0px 0px; margin: 3px">
+                            <p style="padding: 5px 0px 0px">{{coment.postdate|date:"d/m/y"}} -<strong>{{coment.comentautor.username}} </strong> respondió:</p>
+                            <p style="padding: 0px 0px 10px 10px"> {{coment.comentcont}}</p>
+                            {% if user.is_authenticated %}
+                                <form method='POST' action="{% url 'url_adireplycoment' coment.idcoment %}" style="padding: 0px 0px 0px 20px;">
+                                    {% csrf_token %}
+                                    {{replyform | crispy }}
+                                    <button class="btn btn-outline-success"  type="submit" style="height: 0px; padding: 0px 0px 20px 0px" href="{% url 'url_adireplycoment' coment.idcoment %}"><p>Comentar</p></button>
+                                </form>
+                            {% endif %}
+                            {% if coment.respuestas.all %}
+                                {% for resp in coment.respuestas.all %}
+                                    <p style="margin: 0px 30px; padding: 5px 0px 0px">{{resp.replydate|date:"d/m/y"}} -<strong>{{resp.replyautor.username}} </strong> comentó:</p>
+                                    <p style="margin: 0px 50px; padding: 0px 0px 10px 10px"> {{resp.replycont}}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                          
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </div> 
+        {% endif %}
+    </div> 
+</body>     
+{%endblock%}

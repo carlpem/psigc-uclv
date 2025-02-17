@@ -1,0 +1,335 @@
+{% extends 'psigchom/base.html' %}      
+
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="{% url 'url_inicio' %}">INICIO</a> &raquo;<a href="#">Reportes</a>  &raquo;<a href="{% url 'url_indentidactreg' %}">Indicadores</a>&raquo;<strong>Detalles de indicadores</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        <div class="col-lg-12" align="right" style="padding:2px 5px 0px; font-size: 16px"><a class="btn btn-success" style="height: 20px; padding: 0px 10px 25px 10px" href="{% url 'url_indentidactreg'  %}"><p>Regresar a tabla de Entidades-Actores</p></a></div>
+        
+        {% if datrec %}
+            <div class="row" style="padding: 5px 15px"> 
+                <div class="col-lg-3" align="left" style="padding: 2px 3px 3px; font-size: 16px"><strong>Entidad-Actor:</strong></div>
+                <div class="col-lg-8" align="left" style="padding: 5px 0px 0px; font-size: 16px"><h4><strong>{{datrec.entidactor.nombreactor}} </strong></h4></div> 
+            </div>
+            <div class="row" style="padding: 5px 15px"> 
+                <div class="col-lg-2" align="left" style="padding:2px 5px 0px; font-size: 16px"><strong>Municipio:</strong></div>
+                <div class="col-lg-8" align="left" style="padding:5px 0px 0px; font-size: 16px"><h4><strong>{{datrec.munic.nombremun}} </strong>({{datrec.munic.prov}})</h4></div>
+            </div>               
+            <div class="row" style="padding: 5px 15px">
+                <div class="col-lg-8" align="left" style="padding:5px 0px 0px; font-size: 16px">
+                    <h4><strong><u> Resumen de indicadores y valores. </u></strong></h4>
+                </div>
+                <div class="col-lg-3" align="right" style="padding:5px 0px 0px; font-size: 16px">
+                    {% if cantreg > 1 %}
+                        <div class="row" style="padding: 5px 15px">
+                            <a class="btn alert-info alert-dismissible fade show" style="margin: 0px 20px; padding: 0px 5px" href="{% url 'url_evaluaciones' identidact idmuni %}"><strong><p>&nbsp &nbsp Evaluaciones &nbsp &nbsp</p></strong></a> </br>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <a class="btn alert-success alert-dismissible fade show" style="margin: 0px 30px; padding: 0px 5px" href="{% url 'url_regentimunic' identidact idmuni %}"><strong><p>Ver tablas de datos </p></strong></a>
+                    </div>
+                </div>    
+            </div>     
+
+            <h4><strong> _Fecha de registro más reciente:</strong> {{datrec.fechaRegist|date:"d/m/y"}}</h4><br> 
+
+            <h4 style="color: #074f"><strong> PARTICIPANTES</strong></h4>
+            {% for ipge in ipgedrec %}
+                <div class="row">
+                    <div class="col-sm-1.2 col-lg-1.2 col-xl-1.2" style="margin:0; padding: 0px 15px 0px">
+                        <div class="card card-box bg-c-blue" style="padding: 0" >
+                            <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0px 0 0px 5px" ><strong><p>Total de personas</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0 10px 0 0">{{datrec.totalPers}}</span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-lg-2 col-xl-2" style="margin:0 3em 0 0; padding: 0">
+                        <div class="card card-box bg-c-pink" style="padding: 0" >
+                            <h4 class="card card-block bg-c-pink" style="color:#ffff; padding: 0 0 0px 5px" ><strong><p>Mujeres</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0 10px 0 0">{{datrec.cantMujeres}}<span style="font-size:0.7em">({{ipge.ipFemrec }} %)
+                        </div>
+                    </div>
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em; padding: 0">
+                        <div class="card card-box bg-c-green" style="padding: 0" >
+                            <h4 class="card card-block bg-c-green" style="color:#ffff; padding: 0 0 10px 5px" ><strong><p>Edad 18-35</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{datrec.cant18_35}}<span style="font-size:0.7em">({{ipge.ip18_35rec }} %)</span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em; padding: 0">
+                        <div class="card card-box bg-c-yellow" style="padding: 0" >
+                            <h4 class="card card-block bg-c-yellow" style="color:#ffff; padding: 0 0 10px 5px" ><strong><p>Edad 36-55</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{datrec.cant36_55}}<span style="font-size:0.7em">({{ipge.ip36_55rec }} %)</span></span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em; padding: 0">
+                        <div class="card card-box bg-orange" style="padding: 0" >
+                            <h4 class="card card-block bg-orange" style="color:#ffff; padding: 0 0 10px 5px" ><strong><p>Edad 56-70</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{datrec.cant56_70}}<span style="font-size:0.7em">({{ipge.ip56_70rec }} %)</span></span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6" style="margin:0 0.3em 0.7em; padding: 0">
+                        <div class="card card-box bg-red" style="padding: 0" >
+                            <h4 class="card card-block bg-red" style="color:#ffff; padding: 0 0 10px 5px" ><strong><p>Edad  +  70</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{datrec.cant_70}}<span style="font-size:0.7em">({{ipge.ip_70rec }} %)</span></span></h2>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h4 style="color: #074f"><strong> FORMACIÓN, SUPERACIÓN y CAPACITACIÓN</strong></h4>
+
+            {% for ipfor in ipforsupcap %}
+            
+                <div class="row" style="width:100%; margin: 0 0.1em auto">
+                    <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6" style="margin: 0 0.9em 0 0">
+                        <div class="card" style="padding: 0; background:#ccc">
+                            <h4 class="card order-card bg-green" style="padding: 0.5em 0 0.5em 0em" ><strong>Universitarios: <span>{{datrec.cantUniv}} ({{ipfor.ipUnivrec }} %)</span></strong></h4>
+                            <div align="center">
+                                <div class="card card-box" align="center"  style="background:#ccc; margin: 0; padding: 0 0.08em; width:80%" >
+                                    <h4 class="card order-card bg-orange" style="padding: 0 0 0 0.1em" ><strong><p>Doctores</p></strong></h4>
+                                    <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantDrC}} ({{ipfor.ipDrCrec }} %)</span></h2>
+                                </div>
+                                <div class="card card-box" align="center"  style="background:#ccc; margin: 1.5em; padding: 0 0.08em; width:80%" >
+                                    <h4 class="card order-card bg-orange" style="padding: 0 0 0 0.1em" ><strong><p>Masters</p></strong></h4>
+                                    <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantMSc}} ({{ipfor.ipMScrec }} %)</span></h2>
+                                </div>
+                                <div class="card card-box " align="center"  style="background:#ccc; padding: 0; width:80%" >
+                                    <h4 class="card order-card bg-orange" style="padding: 0 0" ><strong><p>Esp. postg.</p></strong></h4>
+                                    <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantEsPost}} ({{ipfor.ipEsPostrec }} %)</span></h2> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style=" width: 70%; margin: 0 0.1em auto"> 
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-green" style="color:#ffff; padding: 0 0" ><strong><p>Técnico Medio Superior</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantTNS}} ( {{ipfor.ipTNSrec }} % )</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-green" style="color:#ffff; padding: 0 0" ><strong><p>Técnico Medio </p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em;  margin: 0 0.8em 0.3em">{{datrec.cantTM}} ( {{ipfor.ipTMrec }} % )</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-green" style="color:#ffff; padding: 0 0" ><strong><p>Obrero/Escuela oficio</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantOb}} ( {{ipfor.ipObrec }} % )</span></h2>
+                            </div>
+                        </div>  
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-c-blue" style="color:#ffff; padding: 0 0" ><strong><p>Cuadros capacitados</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantCuadCap}} </span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-c-blue" style="color:#ffff; padding: 0 0" ><strong><p>Res. Cuadros capacitados</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantResCuad}} </span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card bg-c-blue" style="color:#ffff; padding: 0 0" ><strong><p>Esp. capacitados</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em">{{datrec.cantEspCap}} </span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card" style="background:#001; color:#ffff; padding: 0 0" ><strong><p>Obreros capacitados</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em;  margin: 0 0.8em 0.3em 0">{{datrec.cantOC}} ({{ipfor.ipOC}}% )</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6"  style="margin: 0 0.9em 0 0">
+                            <div class="card card-box " style="padding: 0; background:#ccc" >
+                                <h4 class="card oreder-card" style="background:#001; color:#ffff; padding: 0 0" ><strong><p>Productores capacitados</p></strong></h4>
+                                <h2 class="card card-box-footer text-right" style="margin: 0"><span style="font-size:0.8em; margin: 0 0.8em 0.3em 0">{{datrec.cantPrdCap}} </span></h2>
+                            </div>
+                        </div>                        
+                    </div> 
+                </div>
+            {% endfor %}
+                
+            <h4 style="color: #074f"><strong> ORGANIZACIÓN y ESTRUCTURA INSTITUCIONAL</strong></h4>
+            
+            {% for pproy in iporganrec %}
+                <div class="row" style="width:100%; margin: 0 0.1em ">  
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.1em; padding: 0">
+                        <div class="card card-box" style="background:#ccc; padding: 0" >
+                            <h4 class="card card-block bg-green" style="color:#ffff; padding: 0 0.4em 0.2em 0.5em" ><strong><p>Personas atienden actividad CTI</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="margin: 0 0.8em 0.1em 0">{{datrec.cantPECTIC}} <span style="font-size:0.7em">({{pproy.ipPCTI}}% )</span></span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="width:100%; margin: 0 0.1em ">  
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0 0.5em; padding: 0">
+                        <div class="card card-box" style="background:#ccc; padding: 0" >
+                            <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0.4em 0.4em 0.5em" ><strong><p>Cantidad de ETCIs</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="margin: 0 0.8em 0.1em 0">{{datrec.cantECTI}}</span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0 0.5em; padding: 0">
+                        <div class="card card-box" style="background:#ccc; padding: 0" >
+                            <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0.4em 0.4em 0.5em" ><strong><p>Cantidad de CTAs</p></strong></h4>
+                            <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="margin: 0 0.8em 0.1em 0">{{datrec.cantCTA}}</span></h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-xl-6" style="margin: 0 0.9em 0 0">
+                        <div class="card" style="width: 100%; padding: auto; background:#ccc9">
+                            <h4 class="card order-card bg-c-blue" style="padding: 0 0 0 0.1em" ><strong><p>Innovaciones presentadas a CTAs </p></strong></h4>
+                            <div class = "row" align="center">
+                                <div class="card card-box" align="center"  style="width: 35%; background:#ccc; margin: 0 1em 1em 3em; padding: 0" >
+                                    <h4 class="card order-card" style="background:#001; padding: 0 0 0 0.1em" ><strong><p>Propuestas</p></strong></h4>
+                                    <h2 class="card card-box-footer text-right" style="margin: 0"><span style="margin:0 0.8em 0.1em 0">{{datrec.cantIP_CTA}} </span></h2>
+                                </div>
+                                <div class="card card-box" align="center"  style="width: 35%; background:#ccc; margin: 0 1em 1em 1em; padding: 0" >
+                                    <h4 class="card order-card bg-green" style="background:#001; padding: 0 0 0 0.1em" ><strong><p>Aprobadas</p></strong></h4>
+                                    <h2 class="card card-box-footer text-right" style="margin: 0"><span style="margin: 0 0.8em 0.1em 0">{{datrec.cantIA_CTA}}<span style="font-size:0.7em">({{pproy.ipICTA}}% ) </span></h2>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}    
+                
+            <h4 style="color: #074f"><strong> SISTEMAS DE PROGRAMAS y PROYECTOS y su FINANCIAMIENTO</strong></h4>
+            
+            {% for pproy in ipproyrec %}
+                    <div class="row">
+                        <div class="col-xl-10 col-sm-10 col-m-10 ">
+                            <div class="table table-striped table-hover table-reponsive-sm">
+                                <table > 
+                                    <tr>
+                                        <th style="width: 40%">Tipo de proyecto</th>
+                                        <th style="width: 30%">Cantidad ( % )</th>
+                                        <th style="width: 30%">Financiamiento</th>  
+                                    </tr>
+                                    <tr>
+                                    <td align="center" style="padding: 5px 5px"><p>Propyectos asociados a programas<p></td>
+                                    <td align="center" style="padding: 5px 5px">{{datrec.cantPAP}} ({{pproy.ipPAP}} %)</td> 
+                                    <td align="center" style="padding: 5px 5px">{{datrec.finanPAP}} ({{pproy.ipfinanPAP}} %)</td>
+                                    </tr> 
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"><p>Propyectos no asociados a programas<p></td>
+                                        <td align="center" style="padding: 5px 5px">{{datrec.cantPNAP}} ({{pproy.ipPNAP}} %)</td> 
+                                        <td align="center" style="padding: 5px 5px">{{datrec.finanPNAP}} ({{pproy.ipfinanPNAP}} %)</td>
+                                    </tr> 
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"><p>Propyectos colaboración internacional<p></td>
+                                        <td align="center" style="padding: 5px 5px">{{datrec.cantPCI}} ({{pproy.ipPCI}} %)</td> 
+                                        <td align="center" style="padding: 5px 5px">{{datrec.finanPCI}} ({{pproy.ipfinanPCI}} %)</td>
+                                    </tr> 
+                                    
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"><p>Propyectos de desarrollo local<p></td>
+                                        <td align="center" style="padding: 5px 5px">{{datrec.cantPDL}} ({{pproy.ipPDL}} %)</td> 
+                                        <td align="center" style="padding: 5px 5px">{{datrec.finanPDL}} ({{pproy.ipfinanPDL}} %)</td>
+                                    </tr> 
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"><p>Propyectos del sector productivo<p></td>
+                                        <td align="center" style="padding: 5px 5px">{{datrec.cantPSP}} ({{pproy.ipPSP}} %)</td> 
+                                        <td align="center" style="padding: 5px 5px">{{datrec.finanPSP}}({{pproy.ipfinanPSP}} %)</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"><p><strong>TOTAL<p></td>
+                                        <td align="center" style="padding: 5px 5px"><strong>{{pproy.totalEntProy}}</td> 
+                                        <td align="center" style="padding: 5px 5px"><strong></td></strong>
+                                    </tr>                                     
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px"></td>
+                                        <td align="center" style="padding: 5px 5px"><p><strong>TOTAL<p></td> 
+                                        <td align="center" style="padding: 5px 5px"><strong>{{pproy.totalFinan}}</td></strong>
+                                    </tr>  
+                                </table>
+                            </div>
+                        </div>
+                    </div> </br>
+                {% endfor %}
+                <h4 style="color: #074f"><strong> INTRODUCCIÓN de INNOVACIONES y RESULTADOS. EXTENSIONISMO y DIVULGACIÓN</strong></h4>
+                {% for pprel in iprelrec %}
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6 col-m-6"></br></br></br>
+                            
+                            <table > 
+                                <tr>
+                                    <td style="padding: 1em 0 1em 0; width: 60%"><strong>Totales de todo los tipos de resultados</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%"><strong>{{pprel.totalRITP}}</tr>
+                                <tr>
+                                    <th style="padding: 1em 0 1em 0; width: 60%">. Resultados introducidos</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantRCLA}} ({{pprel.ipRCLA}}%)</td>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 1em 0; width: 60%">. Innovaciones introducidas</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantILA}} ({{pprel.ipILA}}%)</td>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 1em 0; width: 60%">. Tecnologías generadas</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantTec}} ({{pprel.ipTec}}%)</td>                            
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 1em 0; width: 60%">. Procesos generados</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantProc}} ({{pprel.ipProc}}%)</td>                            
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 1em 0; width: 60%">. Producciones generadas</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantProd}} ({{pprel.ipProd}}%)</td>                            
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 col-m-6 ">
+                            <table > 
+                                <tr>
+                                    <div class="card card-box" style="width: 70%; background:#ccc; padding: 0" >
+                                        <h4 class="card card-block bg-green" style="color:#ffff; padding: 0 0.4em 0.2em 0.5em" ><strong><p>Personas vinculadas a la divulgación</p></strong></h4>
+                                        <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="margin: 0 0.8em 0.1em 0">{{datrec.cantPDiv}} <span style="font-size:0.7em">({{pprel.ipPDiv}}% )</span></h2>
+                                    </div>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.5em 0 0.5em 0; width: 60%">. Resultados en TV, radio, prensa, promociones</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantRDExt}} ({{pprel.ipRDExt}}% )</td>                            
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 0.5em 0; width: 60%">. Resultados en libros, revistas, redes sociales</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantRRS}} ({{pprel.ipRRS}}% )</td>                            
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 0.5em 0; width: 60%">. Acciones extensionistas</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantAccExt}} ({{pprel.ipAccExt}}% )</td>                            
+                                </tr>
+                                <tr>
+                                    <th style="padding: 1em 0 0.5em 0; width: 60%">. Redes, grupos y nodos de innovación</th>
+                                    <td align="center" style="font-size: 1.1em; width: 30%">{{datrec.cantRING}} ({{pprel.ipRING}}% )</td>                            
+                                </tr>
+                                
+                            </table>
+                        </div>
+
+                    </div></br>
+                {% endfor %}    
+                
+        {% else %}    
+            <div class="card-body" align="center" style="width:80%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> Error al cargar los datos o no se han registrado datos en la PESIGC para esa la Entidad-Actor o el municipio.</strong></div>
+            </div> 
+        {% endif %}
+            
+    </div> 
+    
+</body>
+
+{% endblock %}

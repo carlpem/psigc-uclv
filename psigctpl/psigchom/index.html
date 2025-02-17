@@ -1,0 +1,50 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "psigchom/SlideContainer.html" %}
+
+<body class="homepage">  
+    
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><strong>INICIO</strong> &raquo;
+    </div>
+    <div id="content">
+        
+        {% for msg in messages %}
+            <strong><li class="alert alert-{{msg.tags}}">{{msg}}</li></strong></br></br>
+        {% endfor %}
+    
+        <div class="box">
+            <h2><strong>BIENVENIDO</strong></h2>
+            <p>La Gestión del Conocimiento consiste en gran medida en la identificación de problemas locales que requieran del conocimiento 
+            para su solución y contribuir a identificar las organizaciones o personas que pueden aportarlo, para luego construir los nexos, 
+            las redes y los flujos de conocimiento que permitan la asimilación, evaluación, procesamiento y uso de estos conocimientos.</p>
+            <p>El presente software es una plataforma informática sobre ambiente de trabajo web para el cálulo de indicadores e índices, con el objetivo de aplicarlos en el
+            <strong>S</strong>istema <strong>I</strong>ntegral de <strong>G</strong>estión del <strong>C</strong>onocimiento (SIGC) 
+            que se formula inicialmente para el programa de Soberanía Alimentaria y Nuticional, pero que es extensible a cualquier otro programa de desarrollo en Cuba.</p>
+            <p>El modelo del SIGC permite gestionar el conocimiento en coherencia con los diferentes procesos que se desarrollan a nivel municipal, 
+            pues se sustenta en la interconexión entre todos los actores y las estrategias de desarrollo. </p>
+            <p>Este modelo ofrece un marco para conocer si se utilizan y aprovechan, el conocimiento a partir del potencial científico, los procesos, las personas,
+            las tecnologías  y la divulgación adecuados para obtener mejores resultados dentro del programa de 'Soberanía y Seguridad Alimentaria y Nutricional'.</p>
+            <p>Este último objetivo se cumple mediante la incorporación de aspectos, categorizados en cuatro ejes, perspectivas o dimensiones, que condicionan
+            la obtención de índices parciales para el cálculo de indicadores tangibles e intangibles. Se definen dos campos de reflexión: 
+            Dinámica de crecimiento (base) y Objetivo estratégico (cómo establecer jerarquía en los diferentes vacíos o resultados de acción).</p>
+            <h3>Modelo de evaluación del SIGC</h3>                    
+            <p align="center"><img  src="{% static '/images/modelopsigc.png' %}", width="100%" height="100%"></p>
+        </div>
+       
+    </div>   
+
+</body>   
+{%endblock%}
+
+{% block js %}
+        <script type="text/javascript" src="{% static '/js/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/slider.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/superfish.js' %}"></script>
+        <script type="text/javascript" src="{% static '/js/custom.js' %}"></script>
+{% endblock %}

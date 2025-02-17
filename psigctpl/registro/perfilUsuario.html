@@ -1,0 +1,42 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+  
+<body class="noheader">
+  <div id="breadcrumbs">
+    <span>Ud. está aquí: </span><a href="/">INICIO</a> &raquo;Sesión de usuario&raquo;<strong>Perfíl de usuario: </strong>{{ usuario.get_username }}
+  </div>
+  <div id='content'><br>
+    <div align="center" style="width:80%; margin: 10px auto;">
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+        {% endfor %}
+      {% endif%}
+    </div>
+    <div class=card style="width:70%; padding: 1px 0px; margin: 10px auto;">
+      <div class="card-body">
+          <h4><strong>Perfíl del usuario</strong></h4>
+          {%  for grupo in user.groups.all %}
+            {% if "Experto" in grupo.name %}
+              {{grupo.name}}
+            {% endif%}
+          {% endfor %}
+          {{request.user.groups_set.get.name }}
+          <form action="" method="Post" action="" >
+            {% csrf_token %}
+            {{perfform | crispy }}
+            <button class="btn btn-success" type="submit" style="margin: 10px 50px;" href="{% url 'url_updperfuser' %}">ACTUALIZAR</button>
+            <button class="btn btn-danger" type="submit" style="margin: 10px 10px;" href="{% url 'url_inicio' %}">CANCELAR</button>
+          </form>     
+        </div>    
+    </div>      
+  </div>  
+</body>  
+  
+{%endblock%}

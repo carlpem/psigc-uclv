@@ -1,0 +1,71 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <div id="sub-header">
+   <h2>Envíenos un mensaje contacto con sus opiniones, sugerencias o dudas</h2><h5>Ayúdenos a perfeccionar el software</h4>
+  </div>
+  <div id="breadcrumbs">
+    <span>Ud. está aquí: </span><a href="/">INICIO</a> &raquo;&nbsp;<strong> Contacto</strong>
+  </div>
+  <div id="content">
+    <div class="card shadow mb-4" style="width: 70%; padding: 1px 0px; margin: 10px auto;">
+      <div class="card-body">
+        <h4 class="card-title" style="align: center;" aria-hidden="true"><strong>Formulario para enviar mensaje de contacto</strong></h4>
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+          {% endfor %}
+        {% endif%}     
+        <form action="" method="POST" id="contactform" getmunicip-url="{% url 'url_getmunicipios' %}"> 
+          {% csrf_token %}
+          <div class="content" style="width:98%; padding: 0px 5px 5px" aling="center">
+            <div class="row">
+              {{contactForm.nombre.label}} 
+              {{contactForm.nombre }}
+            </div></br>
+            <div class="row">
+              <div class="col-lg-6">
+                  {{procedenForm.provincia.label}}</br>
+                  <select id="id_provincia" class="form-control select2" required="True">
+                    <option disabled selected="true" value="0">--Seleccione una provincia--</option>
+                    {% for prov in providata %}
+                      <option value="{{prov.idprov}}">{{prov.nombreprov}}</option> 
+                    {% endfor %}                    
+                  </select>    
+              </div>
+              <div class="col-lg-6">
+                    {{procedenForm.municipio.label}} 
+                    <select name="municipio" id="id_municipio" class="form-control"  required="True">
+                      <option disabled selected="true" value="0">--Seleccione un municipio--</option>
+                      {% for munic in municipdata %}
+                        <option value="{{munic.idmunicipio}}" data-chained="{{munic.provincia.idprov}}">{{munic.nombremunicip }}</option> 
+                      {% endfor %}  
+                    </select>   
+              </div>
+            </div></br>
+            <div class="row">
+              {{contactForm.ecorreo.label}} 
+              {{contactForm.ecorreo }}
+            </div></br>
+            <div class="row">
+              {{contactForm.asunto.label}} 
+              {{contactForm.asunto }}
+            </div></br>
+            <div class="row">
+              {{contactForm.contenido.label}} 
+              {{contactForm.contenido }}
+            </div></br>
+          </div>  
+          <p> (*) campo requerido </p>
+          <button class="btn btn-success" type="submit" style="width: 150px; margin: 20px 100px;">ENVIAR</button>
+        </form>           
+      </div>
+    </div><br>    
+  </div>      
+ 
+{%endblock%}

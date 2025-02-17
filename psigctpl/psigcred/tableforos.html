@@ -1,0 +1,45 @@
+{% extends 'psigchom/noheaderpage.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a> &raquo;<strong>Foros de debate</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        {% if forosdata %}
+            <div class="row" style="padding: 5px"> 
+                {% for foro in forosdata %}
+                    <div class="col-lg-6" style="padding: 10px">
+                        <div class="card shadow bm-11" style="marging: 0px 0px 0px 20px">
+                            <div class="card-body" style="width:100%; height:50%">
+                                <h3 style="width: 98%; padding: 5px">  {{foro.areacon}} </h3>
+                                <p style="text-size: 12 padding: 5px"> <strong>Moderador: </strong>{{foro.moderador.first_name}} {{foro.moderador.last_name}} ({{foro.moderador.username}})</p>
+                                <p style="text-size: 12 padding: 5px"> <strong>Entidad-Actor: </strong>{{foro.entidactor.nombrecorto}}</p>
+                                <p style="text-size: 12 padding: 5px"> <strong>Tema o pregunta de debate:</strong></p>
+                                <p>{{foro.tema | slice:":100"}}...</p>
+                                <div align="right"><a class="btn btn-info" style="margin: 0px 10px; padding: 0px 5px" href="{% url 'url_particiforo' foro.idforo %}"><p>Participar...</p></a></div>
+                                <i class='bx bxs-like'></i><p>Me gusta:{{foro.likes.all.count}}&nbsp;&nbsp; &nbsp;
+                                   No me gusta:{{foro.dlikes.all.count}}&nbsp;&nbsp;&nbsp;
+                                   Intervenciones:{{foro.comentarios.all.count}}</p>
+                            </div>  
+                        </div>
+                    </div> 
+                {% endfor%} 
+            </div><br>
+        {% else %}
+            <div class="card-body" align="center" style="width:70%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> Aún no existen foros de debates compartidos.</strong></div>
+            </div> 
+        {% endif %}
+    </div> 
+</body>     
+
+{%endblock%}

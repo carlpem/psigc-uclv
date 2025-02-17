@@ -1,0 +1,16 @@
+{% extends 'psigchom/base.html' %}
+
+{% block content %}
+
+    <body class="noheader">
+        <div id="breadcrumbs">
+            <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_gestion'%}">Gestión</a> &raquo;<strong>Áreas del conocimiento</strong></span>
+        </div>    
+        <div id="content"><br>
+            
+            {% include 'psigcgest/tableareaconoc.html' %}
+        
+        </div> 
+    </body> 
+
+{%endblock%}

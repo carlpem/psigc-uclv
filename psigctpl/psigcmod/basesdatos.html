@@ -1,0 +1,30 @@
+{% extends 'psigchom/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div id="sub-header">
+		<h2>‘Datos’--procesados->‘información’--seleccionada y relacionada-->‘conocimiento’, </h2>
+    </div>
+
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<strong>Base de datos</strong>
+    </div>
+    <div id="content">
+        
+        <p>En los principales resultados del software respecto de los cálculos de índices e indicadores, intervienen los datos primarios que son registrados en los modelos programados en el software. 
+        Estos datos se gestionan a partir de las opciones del menú "Datos".</p>
+        <p>Todos los elementos que se visualizan en las tablas mostradas a partir de la selección de las opciones de este apartado son gestinados mediante botones de acciones.</p>
+        <p>Para cada registro de datos existe la posible modificación o eliminación de su contenido, por tanto, hay que tener en cuenta que toda la información y conocimientos derivados de estos datos afectará
+         de algún modo a los resultados finales, ya sea borrándolo por completo o quedando contenido sin asignación o huérfano de origen. <br> 
+         Por esta razón cada botón de modificar o eliminar se identificará con color amarillo <button class="btn btn-warning" type="" style="margin: 0px auto; height: 20px; padding: 0px 10px 25px 10px" href=""><p>Editar</p></button>
+         (de averdtencia) o con color rojo <button class="btn btn-danger" type="" style="margin: 0px auto; height: 20px; padding: 0px 10px 25px 10px" href=""><p>Borrar</p></button>(peligro) para llamar la atención del usuario que acceda a estas opciones.
+        Estas opciones de "Editar" y "Borrar" están disponibles solo para aquellos usuarios con permiso para realizar estas operaciones, al igual que la acción de adicionar un regsitro. 
+        Todos los cálculos que se ejecutan para hallar los indicadores se basan en cantidades de determinados conceptos, es decir, números enteros positivos mayor o igual a 0.                    
+        <p>El marco primario de entrada de estos datos son las fechas, los municipios y el proyecto de investigación que se trate, es decir, el manejo de los filtros para acceder a los registros parte de la selección de estos parámetros. 
+        Luego mediante las opciones de filtro de tablas se puede decantar el resto delos datos que no se desean mostrar, hasta llegar al registro objetivo.<br>
+        
+    </div>
+            
+{% endblock %}     

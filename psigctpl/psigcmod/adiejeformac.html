@@ -1,0 +1,126 @@
+{% extends 'psigchom/stylebasepage.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block cssblock %}
+<div class="card shadow mb-4" style="margin: auto; width: 60%">
+    <div class="card-body" style="width: 95%; margin: auto">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        {% if 'url_edieje' in request.path %}
+            <div style="text-align: center;"><h3 style="color: green"> Modificar registro en formación-superación-capacitacion</h3></div>
+        {% else %}
+            <div style="text-align: center;"><h3 style="color: green"> Adicionar registro en formación-superación-capacitacion</h3></div>
+        {% endif%}
+        <form method='POST' style="padding: 1px 0px; margin: 10px auto;" action="">
+            {% csrf_token %}
+            <div class="content" style="width:100%">
+                <div class="row">
+                    <div class="col-lg-4">
+                        {{ejeintelform.proyecto.label}} 
+                        {{ejeintelform.proyecto }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ejeintelform.provincia.label }}
+                        {{ejeintelform.provincia }}
+                    </div>    
+                    <div class="col-lg-4">
+                        {{ejeintelform.municipio.label}} 
+                        {{ejeintelform.municipio }}
+                    </div>
+                </div> <hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                        {{ejeintelform.fechaRegist.label}} 
+                        {{ejeintelform.fechaRegist }}
+                    </div>    
+
+                    
+                    <div class="col-lg-2">
+                        {{ejeintelform.totalPers.label}} 
+                        {{ejeintelform.totalPers }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ejeintelform.cantMujeres.label}} 
+                        {{ejeintelform.cantMujeres }}
+                    </div>
+                    <div class="col-lg-5">
+                        Grupos de edades
+                        <div class="row">
+                            <div class="col-lg-3">
+                                18 - 35 {{ejeintelform.cant18_35}} 
+                            </div>
+                            <div class="col-lg-3">
+                                36 - 55 {{ejeintelform.cant36_55}} 
+                            </div>
+                            <div class="col-lg-3">
+                                55 - 70 {{ejeintelform.cant56_70}} 
+                            </div>
+                            <div class="col-lg-3">
+                                + 70 {{ejeintelform.cant_70}} 
+                            </div>
+                        </div>
+                    </div>
+                </div> <br>
+                <div class="row">  
+                    <div class="col-lg-4">
+                        <div class="card shadow bm-1">
+                            <div class="card-body"  style="paddig: 20px 50px">
+                                <p><h3 style="color: green; margin: 0px 50px"><strong>Formación</strong></h3>
+                                <p style="margin: 0px 50px">(Escolaridad)</p><br>
+                                {{ejeintelform.cantUniv.label}} 
+                                {{ejeintelform.cantUniv}} <br>
+                                {{ejeintelform.cantTNS.label}} 
+                                {{ejeintelform.cantTNS}} <br>
+                                {{ejeintelform.cantTM.label}} 
+                                {{ejeintelform.cantTM}} <br>
+                                {{ejeintelform.cantOb.label}} 
+                                {{ejeintelform.cantOb}} <br>
+                            </div>    
+                        </div>    
+                    </div>     
+                    <div class="col-lg-4">   
+                        <div class="card shadow bm-1">
+                            <div class="card-body" >
+                                <p><h3 style="color: green; margin: 0px 50px"><strong>Superación</strong></h3>
+                                <p style="margin: 0px 60px">(Postgrado)</p><br>
+                                {{ejeintelform.cantDrC.label}} 
+                                {{ejeintelform.cantDrC}} <br>
+                                {{ejeintelform.cantMSc.label}} 
+                                {{ejeintelform.cantMSc}} <br>
+                                {{ejeintelform.cantEsPost.label}} 
+                                {{ejeintelform.cantEsPost}} <br>
+                            </div>    
+                        </div>    
+                    </div>
+                    <div class="col-lg-4">    
+                        <div class="card shadow bm-1">
+                            <div class="card-body" >
+                                <p><h3 style="color: green; margin: 0px 50px"><strong>Capacitación</strong></h3>
+                                <p style="margin: 0px 20px">(Curso,Taller,Entrenamiento )</p><br>
+                                {{ejeintelform.cantCuadCap.label}} 
+                                {{ejeintelform.cantCuadCap}} <br>
+                                {{ejeintelform.cantResCuad.label}} 
+                                {{ejeintelform.cantResCuad}} <br>
+                                {{ejeintelform.cantEspCap.label}} 
+                                {{ejeintelform.cantEspCap}} <br>
+                                {{ejeintelform.cantOC.label}} 
+                                {{ejeintelform.cantOC}} <br>
+                            </div>    
+                        </div> 
+                    </div>      
+                </div> <br>          
+                <div class="row" style="padding: 10px 300px ">  
+                    <button class="btn btn-success" type="submit" style="margin: 0px auto; height: 35px; padding: 5px 30px 0px" href="{% url 'url_adieje' %}"><p>ADICIONAR</p></button>
+                    <a class="btn btn-danger" type="submit" style="margin: 0px auto; height: 35px; padding: 5px 30px" href="{% url 'url_ejesbd'  %}"><p>CANCELAR</p></a>
+                </div>     
+            </div>    
+        </form>    
+    </div>    
+</div>
+{% endblock %}

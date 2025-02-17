@@ -1,0 +1,44 @@
+
+{%load static %}
+
+{% load crispy_forms_tags %}
+
+<ul>	
+    {% if user.is_authenticated %}
+        <li><span><h4>Sesión de Usuario:</h4></span>
+            <span><strong>Identificador: </strong>{{ user.get_username }}</span><br>
+        <li><a href="">* Contactos enviados</a><br>
+            <a href="">* Publicaciones enviadas</a><br>
+            <a href="">* Demandas solicitadas</a><br>
+            <a href="">* Demandas atendidas</a><br></li>
+        <li> <form method="" action="{% url 'url_perfiluser' request.user.pk %}">
+            {% csrf_token %}
+            <input class="btn btn-success" type="submit" href="POST" value="Perfil de usuario">
+        </form></li>
+        <li><div style="align: center;margin: 0px auto"><a href="{% url 'url_logout'%}"><strong>Finalizar sesión</strong></a></div></li>
+    {% else %}
+        <span><h4>Iniciar como Usuario</h4></span>
+        <form  name="loginsideform" action="{% url 'url_sideloginuser' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="fieldWrapper">
+                <label for="userident"><strong>Usuario:</strong>*</label><br>
+                <input type="input" name="userident"  class="form-control" style="width: 98%; align: center" placeholder="Escriba identificador">
+            </div>
+            <div class="fieldWrapper">
+                <label for="passident"><strong>Contraseña:</strong>*</label>
+                <input type="password" name="passident"  class="form-control" style="width: 98%; align: center" placeholder="Escriba contraseña">
+            </div> (*) requerido<br>   
+            <input class ="btn btn-success" type="submit" name="entrar" value="ENTRAR" style="align: left width: 50%; padding: 5px 50px">
+        </form> <br>    
+    
+        <a style="" href="#"><strong>¿Olvidó la contraseña?</strong></a> <br> <br>
+    
+        <li><form method="" action="{% url 'url_registuser'%}">
+            {% csrf_token %}
+            <input class="btn btn-dark" type="submit" href="POST" value="Registrarse en el sitio">
+        </form></li>
+           
+    {% endif %}
+
+</ul>

@@ -1,0 +1,164 @@
+{% extends 'psigchom/main.html' %}      
+
+{% load static %}
+
+{% block content %}
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="#">Reportes</a> &raquo;<strong>Generalidades</strong></span>
+    </div>    
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        <div class="container">
+
+            <!--#######  REPORTE DE ORGANISMOS DE LA ADMINISTRACIÓN DEL ESTADO PARTICIPANTES EN LA PESIGC  ####### -->
+            
+            {% if organismos %}
+                <h4><strong> Organismos de la Adminisración Central del Estado participantes en la PESIGC.</strong></h4>
+                <div class="row">
+                    <div class="col-sm-15 col-m-15 col-lg-15">
+                        <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                            <table > 
+                                <tr>
+                                    <th style="width: 1%; margin: 0 1em; padding: 0.8em 2em">Nro.</th>
+                                    <th style="">Siglas</th>
+                                    <th style="">Nombre</th>
+                                </tr>    
+                                {% for org in organismos %}
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px">{{ forloop.counter }}</td>
+                                        <td style="padding: 5px 5px"><strong>{{org.siglas}}</strong></td>
+                                        <td style="padding: 5px 5px">{{org.nombreoace}}</strong></td>
+                                    </tr>     
+                                {% endfor %}   
+                            </table>
+                        </div>
+                    </div>
+                </div><br>
+            {% else %}
+                <div class="card-body" align="center" style="width:80%; margin: auto">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No existen Organismos de la Administración del Estado participando en la PESIGC.</strong></div>
+                </div>   
+            {% endif %}
+
+            <!--#######  REPORTE DE PROGRAMAS DE DESARROLLO INCLUIDOS EN LA PESIGC  ####### -->
+            
+            {% if programas %}
+                <h4><strong> Programas de desarrollo incluidos en la PESIGC.</strong></h4>
+                <div class="row">
+                    <div class="col-sm-15 col-m-15 col-lg-15">
+                        <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                            <table > 
+                                <tr>
+                                    <th style="width: 1%; margin: 0 1em; padding: 0.8em 2em">Nro.</th>
+                                    <th >Nombre del programa</th>
+                                    <th >OACE rector</th>
+                                    <th >Breve descripción</th>
+                                </tr>    
+                                {% for prog in programas %}
+                                    <tr>
+                                        <td align="center" style="padding: 5px 5px">{{ forloop.counter }}</td>
+                                        <td style="padding: 5px 5px">{{prog.nombreprog}}</td>
+                                        <td style="padding: 5px 5px">{{prog.oacerector.siglas}}</td>
+                                        <td style="padding: 5px 5px">{{prog.descriprog}} </td>
+                                    </tr>     
+                                {% endfor%}   
+                            </table>
+                        </div>
+                    </div>
+                </div><br>
+            {% else %}
+                <div class="card-body" align="center" style="width:80%; margin: auto">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No existen programas de desarrollo incluidos en la PESIGC.</strong></div>
+                </div>   
+            {% endif %}
+            
+            <!--#######  MUNICIPIOS Y ENTIDADES-ACTORES REGISTRADOS EN LA PESIGC ####### -->
+            
+            {% if entidact  %}
+                <h4><strong> Entidades-Actores y Alcance (Municipios) registrados en la PESIGC.</strong></h4>
+                <div class="row">
+                    <div class="col-sm-12 col-m-12 col-lg-12 ">
+                        <div class="table table-striped table-hover table-reponsive-sm">
+                            <table > 
+                                <tr>
+                                    <th style="width: 1%; margin: 0; padding: 0.8em 0.3em">Nro.</th>
+                                    <th style="width: 16%">Provincia </th>
+                                    <th style="width: 16%">Municipio </th>
+                                    <th style="width: 20%">Entidad-Actor</th>
+                                    <th style="width: 25%">Alcance SIGC</th>
+                                    <th style="width: 5%">OACE</th>
+                                    <th style="width: 30%">Coordinador</th>
+                                    <!--th style="width: 40%">Programas de desarrollo</th-->
+                                </tr>
+                                {% for entact in entidact %}
+                                    <tr>
+                                        <td align="center">{{ forloop.counter }}</td>
+                                        <td>{{entact.munic.prov}} </td>
+                                        <td>{{entact.munic}} </td>
+                                        <td>{{entact.nombrecorto}}</td>
+                                        <td>{{entact.alcanc}} {% if entact.alcanc == 'Municipal' %}({{entact.munic}}){%endif%}</td>
+                                        <td>{% if entact.oace %} {{entact.oace.siglas}}({{entact.tipoactor}}){%else%}{{entact.tipoactor}} {%endif%}</td>
+                                        <td>{% if entact.coordinador %} {{entact.coordinador.first_name}} {{entact.coordinador.last_name}}{%else%}aún sin asignar{% endif%}</td>
+                                        <!--td> 
+                                            {% for prog in entact.programas__set.filter %}
+                                                <p>. {{prog.nombreprog}} </p>
+                                            {% endfor %}
+                                        </td-->
+                                    </tr>     
+                                {% endfor%}   
+                            </table>
+                        </div>
+                    </div>
+                </div> <br>
+
+                <!--#######  REPORTE DE ENTIDADES-ACTORES CON REGISTROS DE DATOS EN LA PESIGC ####### -->
+               
+                {% if inforegent %}
+                
+                <h4><strong> Entidades-Actores con datos primarios registrados en la PESIGC.</strong></h4>
+                <div class="row">
+                    <div class="col-sm-12 col-m-12 ">
+                        <div class="table table-striped table-hover table-reponsive-sm table-reponsive-lg">
+                            <table > 
+                                <tr>
+                                    <th style="width: 1%; margin: 0; padding: 0.8em 0.3em">Nro.</th>
+                                    <th style="width: 20%">Provincia </th>
+                                    <th style="width: 30%">Entidad-Actor</th>
+                                    <th style="width: 30%">Municipio SIGC (#registros)</th>
+                                    <th style="width: 20%"></th>
+                                </tr>
+                               
+                                {% for regent in inforegent %}
+                                    <tr>
+                                        <td align="center" style="padding: 0.5em 0 0.5em 0">{{ forloop.counter }}</td>
+                                        <td style="padding: 5px 5px">{{regent.munic__prov__nombreprov}}</td>
+                                        <td style="padding: 5px 5px">{{regent.entidactor__nombrecorto}}</td>
+                                        <td style="padding: 5px 5px">{{regent.munic__nombremun}} ( {{regent.num_municip}})</p></td>
+                                        <td>
+                                            <div style="width: 100%"align="right"><a class="btn alert-success alert-dismissible fade show" style="margin: 0.1em 0 0.2em 0; padding: 0 0.2em" href="{% url 'url_regentimunic' regent.entidactor__idactor regent.munic__idmun %}"><p>ver datos</p></a></div>
+                                        </td>
+                                    </tr>     
+                                {% endfor%}   
+                            </table>
+                        </div>
+                    </div>
+                </div>    
+                {% else %}   
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No existen datos primarios de las Entidades-Actores registrados.</strong></div>
+                    </div>    
+                {% endif %}   
+            {% else %}   
+                <div class="card-body" align="center" style="width:70%; margin: auto">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No existen Entidades-Actores resgitrados en la PSIGC.</strong></div>
+                </div>    
+            {% endif %}
+        </div>
+    </div> 
+</body>
+{%endblock%}

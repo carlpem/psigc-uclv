@@ -1,0 +1,288 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+    
+    <body class="noheader">
+        <div id="breadcrumbs">
+            <span>Ud. está aqui :</span><a href="{% url 'url_inicio' %}">INICIO</a> &raquo;<a href="#">Reportes</a> &raquo;<strong>Detalles de registros de Entidad-Actor</strong></span>
+        </div>
+        <div id="content"><br>
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+                {% endfor %}                
+            {% endif%}
+            {% if munic and entidact %}
+                <div class="row" style="padding: 5px 15px"> 
+                    <div class="col-lg-3" align="left" style="padding: 2px 3px 3px; font-size: 16px"><strong>Entidac-Actor:</strong></div>
+                    <div class="col-lg-8" align="left" style="padding: 5px 0px 0px; font-size: 16px"><h4><strong>{{entidact}} </strong></h4></div> 
+                </div>
+                <div class="row" style="padding: 5px 15px"> 
+                    <div class="col-lg-2" align="left" style="padding:2px 5px 0px; font-size: 16px"><strong>Municipio:</strong></div>
+                    <div class="col-lg-4" align="left" style="padding:5px 0px 0px; font-size: 16px"><h4><strong>{{munic}} </strong>({{prov}})</h4></div>
+                    <div class="col-lg-6" align="right" style="padding:5px 0px 0px; font-size: 16px"><h4>
+                        <a class="btn alert-info alert-dismissible fade show" style="margin: 0px 20px; padding: 0px 5px" href="{% url 'url_indicadores' identidact idmuni %}"><strong><p>&nbsp &nbsp Indicadores &nbsp &nbsp</p></strong></a> <br><br>
+                        {% if cantreg > 1 %}<a class="btn alert-success alert-dismissible fade show" style="margin: 0px 20px; padding: 0px 5px" href="{% url 'url_evaluaciones' identidact idmuni %}"><strong><p>&nbsp &nbsp Evaluaciones &nbsp &nbsp</p></strong></a> </br>{% endif %}
+                    </div>
+                </div>               
+                <div class="row" style="padding: 5px 15px">
+                    <div class="col-lg-8" align="left" style="padding:5px 0px 0px; font-size: 16px">
+                        <h4><strong> Tablas de registros de datos primarios por eje o dimensión. </strong></h4>
+                    </div>
+                </div>
+                {% if regpers %}
+                    <h4><strong> Participantes.</strong></h4>
+                    <div class="row">
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                                <table > 
+                                    <tr>
+                                        <th align="center" style="">Nro.</th>
+                                        <th align="center" style="width: 1%">Fecha </p>(*base)</th>
+                                        <th align="center" style="width: 10%">Total personas</th>
+                                        <th align="center" style="">Féminas</th>
+                                        <th align="center" style="">Edad 18_35</th>
+                                        <th align="center" style="">Edad 36_55</th>
+                                        <th align="center" style="">Edad 56_70</th>
+                                        <th align="center" style="">Edad +70</th>
+                                    </tr>    
+                                    {% for pers in regpers %}
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.fecha|date:"d/m/y" }}{% if pers.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.totalPers}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.cantMujeres}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.cant18_35}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.cant36_55}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.cant56_70}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{pers.cant_70}}</td>
+                                        </tr>     
+                                    {% endfor %}   
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No existen datos para personas para este proyecto en el municipio.</strong></div>
+                    </div>   
+                {% endif %}
+                {% if regform %}
+                    <h4 style="color: #074f"><strong> _ Eje: FORMACIÓN, SUPERACIÓN y CAPACITACIÓN</strong></h4>
+                    <div class="row">
+                        <h4 style="margin: 0 0 0 2em"><strong> Formación.</strong></h4>
+
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                                <table > 
+                                    <tr>
+                                        <th align="center" style="width: 1%">Nro.</th>
+                                        <th align="center" style="width: 10%">Fecha </p>(*base)</th>
+                                        <th align="center" style="width: 10%">Universit.</th>
+                                        <th align="center" style="width: 10%">Técnicos Nivel Superior</th>
+                                        <th align="center" style="width: 10%">Técnicos Medio</th>
+                                        <th align="center" style="width: 10%">Obreros/Esc. oficio</th>
+                                    </tr>    
+                                    {% for form in regform %}
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.fecha|date:"d/m/y"}}{% if form.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantUniv}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantTNS}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantTM}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantOb}}</td>
+                                        </tr>     
+                                    {% endfor %} 
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 style="margin: 0 0 0 2em"><strong> Superación y Capacitación.</strong></h4>
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                                <table > 
+                                    <tr>
+                                        <th align="center" style="width: 1px">Nro.</th>
+                                        <th align="center" style="width: 1%">Fecha</p>(*base)</th>                                       
+                                        <th align="center" style="width: 1%">DrC.</th>
+                                        <th align="center" style="width: 1%">MSc.</th>
+                                        <th align="center" style="width: 1%">Espec. de Postgrado</th>
+                                        <th align="center" style="width: 1%">Cuad. capacit.</th>
+                                        <th align="center" style="width: 1%">Reserv. cuad. capacit.</th>
+                                        <th align="center" style="width: 1%">Espec. capacit.</th>
+                                        <th align="center" style="width: 1%">Product. capacit.</th>
+                                        <th align="center" style="width: 1%">Obr. capacit.</th>
+                                    </tr>    
+                                    {% for form in regform %}
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.fecha|date:"d/m/y"}}{% if form.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantDrC}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantMSc}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantEsPost}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantCuadCap}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantResCuad}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantEspCap}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantPrdCap}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{form.cantOC}}</td>
+                                        </tr>     
+                                    {% endfor %} 
+                                </table>
+                            </div>
+                        </div>
+                    </div><br>
+                {% else %}
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No existen datos de formación para este proyecto en el municipio.</strong></div>
+                    </div>   
+                {% endif %}
+                
+                {% if regorganiz %}
+                    <h4 style="color: #074f"><strong> _ Eje: ORGANIZACIÓN y ESTRUCTURA INSTITUCIONAL</strong></h4>
+                    <div class="row">
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                                <table > 
+                                    <tr>
+                                        <th align="center" style="width: 1em">Nro.</th>
+                                        <th align="center" style="width: 1em">Fecha</p>(*base)</th>
+                                        <th align="center" style="width: 10em">Cant. de CTAs</th>
+                                        <th align="center" style="width: 10em">Innov. propuestas</th>
+                                        <th align="center" style="width: 10em">Innov. avaladas</th>
+                                        <th align="center" style="width: 10em">Cant. de ECTIs</th>
+                                        <th align="center" style="width: 10em">Pers. atienden CTI</th>
+                                    </tr>    
+                                    {% for organiz in regorganiz %} 
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.fecha|date:"d/m/y"}}{% if organiz.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.cantCTA}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.cantIP_CTA}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.cantIA_CTA}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.cantECTI}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{organiz.cantPECTIC}}</td>
+                                        </tr>     
+                                    {% endfor %} 
+                                </table>
+                            </div>
+                        </div>
+                    </div><br>
+                {% else %}
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No existen datos de organización y estructura para este proyecto en el municipio.</strong></div>
+                    </div>   
+                {% endif %}
+
+                {% if regform %}
+                    <h4 style="color: #074f"><strong> _ Eje: SISTEMAS DE PROGRAMAS y PROYECTOS y su FINANCIAMIENTO</strong></h4>
+                    <div class="row">
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-m table-reponsive-lg">
+                                <table>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <th colspan="5" align="center" style="width: 1em">Proyectos</th>
+                                        <th colspan="7" align="center" style="width: 1em">Financiamiento</th>
+                                    </tr>
+                                    <tr>
+                                        <th align="center" >Nro.</th>
+                                        <th align="center" >Fecha</p>(*base)</th>
+                                        <th align="center" >PAP</th>
+                                        <th align="center" >PNAP</th>
+                                        <th align="center" s>PCI</th>
+                                        <th align="center" >PDL</th>
+                                        <th align="center" >PSP</th>
+
+                                        <th align="center" >PAP</th>
+                                        <th align="center" >PNAP</th>
+                                        <th align="center" >PCI</th>
+                                        <th align="center" >PDL</th>
+                                        <th align="center" s>PSP</th>
+                                    </tr>    
+                                    {% for gest in reggest %} 
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.fecha|date:"d/m/y"}}{% if gest.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.cantPAP}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.cantPNAP}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.cantPCI}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.cantPDL}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.cantPSP}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.finanPAP}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.finanPNAP}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.finanPCI}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.finanPDL}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{gest.finanPSP}}</td>
+                                            
+                                        </tr>     
+                                    {% endfor %} 
+                                </table>
+                            </div>
+                        </div>
+                    </div></br>
+                {% else %}
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No existen datos de gestion de proyectos y financiamiento para este proyecto en el municipio.</strong></div>
+                    </div>   
+                {% endif %}
+
+                {% if regrelac %}
+                    <h4 style="color: #074f"><strong> _ Eje: INTRODUCCIÓN de INNOVACIONES y RESULTADOS. EXTENSIONISMO y DIVULGACIÓN</strong></h4>
+                    <div class="row">
+                        <div class="col-sm-12 col-m-12 col-lg-12">
+                            <div class="table table-striped table-hover table-reponsive-sm table-reponsive-m table-reponsive-lg">
+                                <table > 
+                                    <tr>
+                                        <th align="center" >Nro.</th>
+                                        <th align="center" >Fecha</p>(*base)</th>
+                                        <th align="center" >Result. introduc.</th>
+                                        <th align="center" >Innov. introduc.</th>
+                                        <th align="center" >Tecnol. introduc.</th>
+                                        <th align="center" >Proc. gener.</th>
+                                        <th align="center" >Prod. gener.s</th>
+                                        <th align="center" >Divug. radio, prensa..</th>
+                                        <th align="center" >Divug. libros, revist.</th>
+                                        <th align="center" >Acc. extension.</th>
+                                        <th align="center" >Grupos, redes, nodos..</th>
+                                        <th align="center" >Pers. vincul</th>
+                                    </tr>    
+                                    {% for rel in regrelac %} 
+                                        <tr>
+                                            <td align="center" style="padding: 5px 5px">{{forloop.counter}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.fecha|date:"d/m/y"}}{% if rel.fechabase %}*{%endif%}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantRCLA}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantILA}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantTec}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantProc}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantProd}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantRDExt}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantRRS}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantAccExt}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantRING}}</td>
+                                            <td align="center" style="padding: 5px 5px">{{rel.cantPDiv}}</td>
+                                        </tr>     
+                                    {% endfor %}  
+                                </table>
+                            </div>
+                        </div>
+                    </div><br>
+                {% else %}
+                    <div class="card-body" align="center" style="width:80%; margin: auto">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> No existen datos de extensionismo y divulgación para este proyecto en el municipio.</strong></div>
+                    </div>   
+                {% endif %}
+
+            {% else %}
+                <div class="card-body" align="center" style="width:80%; margin: auto">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> NO SE HAN ESPECIFICADO DATOS DE NINGÚN TIPO EN LA PESIGC PARA LA EVALUACIÓN DEL SISTEMA INTEGRADO DE GESTIÓN DEL CONOCIMIENTO.</strong></div>
+                </div> 
+            {% endif %}
+        </div>    
+    
+    </body>
+
+{%endblock%}

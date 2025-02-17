@@ -1,0 +1,27 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    {% if 'url_loginuser' in request.path %}
+        <div id="sub-header"><h2>Autenticación de usuario ya registrado </h2></div>
+        <div id="breadcrumbs">
+          <span>Ud. está aqui :</span><a href="/">INICIO</a> &raquo;&nbsp;<strong>Iniciar como usuario ya registrado</strong>
+        </div>
+        <div id="content">
+          {% include "registro/loginform.html" %}
+        </div>
+    {% endif%}
+
+    {% if 'url_registuser' in request.path %}
+        <div id="sub-header"><h2>Navegue por el sitio con más opciones</h2></div>
+        <div id="breadcrumbs">
+            <span>Ud. está aqui :</span><a href="/">INICIO</a> &raquo;&nbsp;<strong>Registro de usuario nuevo</strong>
+        </div>
+        <div id="content">
+          {% include "registro/registroform.html" %}
+        </div>
+    {% endif%}
+    
+{%endblock%}

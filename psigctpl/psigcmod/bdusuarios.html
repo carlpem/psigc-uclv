@@ -1,0 +1,23 @@
+{% extends 'psigchom/main.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_basesdatos'%}">Datos</a> &raquo;<strong>Registro de usuarios</strong></span>
+    </div>    
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        {% include 'psigcmod/tableusuarios.html' %}
+      
+    </div> 
+</body>     
+{%endblock%}

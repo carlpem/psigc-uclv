@@ -1,0 +1,34 @@
+
+{% extends 'psigchom/stylebasepage.html'%}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block cssblock %}
+
+<div id="body">
+    <div id="sub-header">
+		<h2></h2>
+    </div>
+    <div id="breadcrumbs">
+        <span>Ud. está aquí:</span><strong>Solicitud de demanda</strong>
+    </div>   
+    <div id="content">
+      <div class="card shadow mb-4" style="width: 80%; padding: 1px 0px; margin: 10px auto;">
+        <div class="card-body" >
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+            {% endfor %}
+          {% endif%}  
+          <div class="content">
+            <form action="" method="Post"> 
+              {% csrf_token %}
+              {{demform | cryspi }}
+            </form>    
+          </div>
+        </div>
+      </div>  
+    </div>       
+</div>  
+{%endblock%}

@@ -1,0 +1,67 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <body class="noheader">
+        <div id="breadcrumbs">
+            <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_basesdatos'%}">Datos</a> &raquo;<strong>Ejes</strong></span>
+        </div>    
+        <div id="content"><br>
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+                {% endfor %}
+            {% endif%}
+            <div class="container">
+
+                <div  style="text-align: right"><a style="padding: 0px 10px" id="" class="btn btn-dark" href="{% url 'url_adieje' %}" role="button"><strong>Adicionar registro</strong></a></div>
+                        
+                {% if ejesdata %}
+                    <h4><strong> Tabla de registro de datos primarios de ejes .</strong></h4>
+                        <div class="col-sm-12 col-m-12 col-lg-12 col-lx-12">
+                            <div class="table table-striped table-hover table-reponsive-sm">
+                                <table>
+                                    <thead> 
+                                    <tr>
+                                        <th scope="col" style="width: 5%">Fecha (*base)</th>
+                                        <th scope="col" style="width: 20%">Entidad-Actor</th>
+                                        <th scope="col" style="width: 30%">Muncipio SIGC (provinc.)</th>
+                                        <th scope="col" style="width: 50%">Coordinador</th>
+                                        {% if user.is_authenticated %}
+                                            <th style="padding: 10px 3px" text-align: "right">Opciones</th>
+                                            <th></th>
+                                        {% endif %} 
+                                    </tr>  
+                                    </thead>  
+                                    {% for eje in ejesdata %}
+                                        <tr>
+                                            <td style="padding: 3px 3px"><p>{{eje.fechaRegist|date:"d/m/y" }} {% if eje.fechabase %}*{% endif %}</p></td>
+                                            <td style="padding: 3px 3px"><p>{{eje.entidactor.nombrecorto}}</p></td>
+                                            <td style="padding: 3px 3px"><p>{{eje.munic}}({{eje.munic.prov}})</p></td>
+                                            <td style="padding: 3px 3px"><p>{% if eje.entidactor.coordinador %}{{eje.entidactor.coordinador}}{%else%}aún sin asignar{% endif %}</p></td>
+                                            {% if user.is_authenticated %}
+                                                <td style="width: 10%; padding: 3px 4px"><a class="btn btn-warning" style="padding: 2px 3px" href="{% url 'url_ediejeinfo' eje.idinfo%}"><p>Ver/Editar</p></a></td>
+                                                <td style="padding: 3px 4px"><a class="btn btn-danger" style="padding: 2px 5px" href="{% url 'url_elieje' eje.idinfo %}"><p>Eliminar</p></a></td>
+                                            {% endif %}
+                                        </tr>     
+                                    {% endfor%}   
+                                </table>
+                            </div>
+                        </div>    
+                {% else %}   
+                    <div class="card-body" align="center" style="width:70%; margin: auto">
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No existen datos registrados para esta Entidad-Actor.</strong></div>
+                    </div>    
+                {% endif %}
+                    
+            </div>
+        
+        </div> 
+    </body>
+
+{%endblock%}

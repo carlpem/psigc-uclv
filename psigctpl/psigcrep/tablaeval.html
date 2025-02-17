@@ -1,0 +1,470 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="{% url 'url_inicio' %}">INICIO</a> &raquo;<a href="#">Reportes</a>  &raquo;<a href="{% url 'url_evalentidactreg' %}">Evaluaciones</a>&raquo;<strong>Detalles de evaluación</strong></span>
+    </div> 
+    <div  id="content"></br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        <div class="col-lg-12" align="right" style="padding:2px 5px 0px; font-size: 16px"><a class="btn btn-success" style="height: 20px; padding: 0px 10px 25px 10px" href="{% url 'url_evalentidactreg'  %}"><p>Regresar a tabla de Entidades-Actores</p></a></div>
+        {% if datoeval %}
+            <div class="row" style="padding: 5px 15px"> 
+                <div class="col-lg-4" align="left" style="padding: 2px 3px 3px; font-size: 16px"><strong>Entidad-Actor:</strong></div>
+                <div class="col-lg-8" align="left" style="padding: 5px 0px 0px; font-size: 16px"><h4><strong>{{datoeval.entidactor}} </strong></h4></div> 
+            </div>
+            <div class="row" style="padding: 5px 15px"> 
+                <div class="col-lg-2" align="left" style="padding:2px 5px 0px; font-size: 16px"><strong>Municipio:</strong></div>
+                <div class="col-lg-8" align="left" style="padding:5px 0px 0px; font-size: 16px"><h4><strong>{{datoeval.munic}} </strong>({{datoeval.munic.prov}})</h4></div>
+            </div>               
+            
+            <h4 style="color: #074f"><strong> ÍNDICES GENERALES (EVALUACIÓN)</strong></h4>
+            <div class="row" style="margin: 0 0.1em">
+                {% for ind in indejes %}
+                <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em">
+                    <div class="card card-box bg-c-blue" style="padding: 0" >
+                        <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0 20px 5px" ><strong><p>Formac.-Sup.-Capacit.</p></strong></h4>
+                        <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{ind.ippintelec }} 
+                           <span style="font-size:0.7em">(
+                           {% if ind.ippintelec > 100 %} EXCELENTE {% endif %}
+                           {% if ind.ippintelec >= 90 and ind.ippintelec <= 100 %} BUENA {% endif %}
+                           {% if ind.ippintelec < 90  and ind.ippintelec >= 70 %} ACEPTABLE {% endif %}
+                           {% if ind.ippintelec < 70 and ind.ippintelec >= 50 %} REGULAR {% endif %}
+                           {% if ind.ippintelec < 50 %} DEFICIENTE {% endif %})
+                        </span></h2>
+                    </div>
+                </div>
+                <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em; padding: 0">
+                    <div class="card card-box bg-c-blue" style="padding: 0" >
+                        <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0 20px 5px" ><strong><p>Organizac.-Estructura.</p></strong></h4>
+                        <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{ind.ipporganiz }} 
+                            <span style="font-size:0.7em">(
+                                {% if ind.ipporganiz > 100 %} EXCELENTE {% endif %}
+                                {% if ind.ipporganiz >= 90 and ind.ipporganiz <= 100%} BUENA {% endif %}
+                                {% if ind.ipporganiz < 90  and ind.ipporganiz >= 70 %} ACEPTABLE {% endif %}
+                                {% if ind.ipporganiz < 70 and ind.ipporganiz >= 50 %} REGULAR {% endif %}
+                                {% if ind.ipporganiz < 50 %} DEFICIENTE {% endif %})
+                         </span></h2>
+                        </div>
+                </div>
+                <div class="col-sm-1.5 col-lg-1.5 col-xl-1.5" style="margin:0 0.3em 0.7em; padding: 0">
+                    <div class="card card-box bg-c-blue" style="padding: 0" >
+                        <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0 20px 5px" ><strong><p>Gestión proyec./financ.</p></strong></h4>
+                        <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{ind.ippgest }} 
+                            <span style="font-size:0.7em">(
+                                {% if ind.ippgest > 100 %} EXCELENTE {% endif %}
+                                {% if ind.ippgest >= 90 and ind.ippgest <= 100 %} BUENA {% endif %}
+                                {% if ind.ippgest < 90  and ind.ippgest >= 70 %} ACEPTABLE {% endif %}
+                                {% if ind.ippgest < 70 and ind.ippgest >= 50 %} REGULAR {% endif %}
+                                {% if ind.ippgest < 50 %} DEFICIENTE {% endif %})
+                         </span></h2> 
+                    </div>
+                </div>
+                <div class="col-sm-1.6 col-lg-1.6 col-xl-1.6" style="margin:0 0.3em 0.7em; padding: 0">
+                    <div class="card card-box bg-c-blue" style="padding: 0" >
+                        <h4 class="card card-block bg-c-blue" style="color:#ffff; padding: 0 0 20px 5px" ><strong><p>Innovac.-Extensionis.</p></strong></h4>
+                        <h2 class="card card-box-footer text-right" style="margin: 0; color:#ffff"><span style="padding: 0px 10px 0 0">{{ind.ipprelac }} 
+                            <span style="font-size:0.7em">(
+                                {% if ind.ipprelac > 100 %} EXCELENTE {% endif %}
+                                {% if ind.ipprelac >= 90 and ind.ipprelac <= 100 %} BUENA {% endif %}
+                                {% if ind.ipprelac < 90  and ind.ipprelac >= 70 %} ACEPTABLE {% endif %}
+                                {% if ind.ipprelac < 70 and ind.ipprelac >= 50 %} REGULAR {% endif %}
+                                {% if ind.ipprelac < 50 %} DEFICIENTE {% endif %})
+                         </span></h2> 
+                    </div>
+                </div>
+                {% endfor %}   
+            </div> <hr class="mt-1">     
+
+            <h4 align="center" style="color: #074f"><strong>Cálculos parciales por ejes</strong></h4>
+            
+            <div class="row" style="padding: 5px 15px">
+                <div class="col-lg-8" align="left" style="padding:5px 0px 0px; font-size: 16px">
+                    <h4><strong> Índices de evaluación. </strong></h4>
+                </div>
+                <div class="col-lg-4" align="right" style="padding:5px 0px 0px; font-size: 16px">
+                    <div class="row" style="padding: 5px 15px">
+                        <a class="btn alert-info alert-dismissible fade show" style="margin: 0px 20px; padding: 0px 5px" href="{% url 'url_indicadores' identidact idmun %}"><strong><p>&nbsp &nbsp Indicadores &nbsp &nbsp</p></strong></a>
+                    </div>
+                    <div class="row">
+                        <a class="btn alert-success alert-dismissible fade show" style="margin: 0px 20px; padding: 0px 5px" href="{% url 'url_regentimunic' identidact idmun %}"><strong><p>Ver tablas de datos </p></strong></a>
+                    </div>
+                </div>
+            </div>
+            
+            <h4><strong>_ Fecha base :</strong> {{datobas.fechaRegist|date:"d/m/y" }}</h4>
+            <h4><strong>_ Fecha de registro más reciente:</strong> {{datoeval.fechaRegist|date:"d/m/y" }}</h4> <hr class="mt-1">
+            
+            <div class="row">
+                <div class="col-xl-12 col-sm-12 col-m-12">
+                    <h4 align="center" style="color: #074f"><strong>Formación/Superación/Capacitación</strong></h4>
+                    {% for indpar in indparcform %}
+                        <table > 
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 10%"></th>
+                                <th style="padding: 1em 0 1em 0;width: 20%">dinámica de crecimiento (%)</th>
+                                <th style="width: 20%">indice </th>
+                                <th style="width: 40%; padding: 1em 0 1em 0; width: 40%">evaluación</th>
+                            <tr>    
+                            <tr>
+                                <th  style="padding: 1em 0 1em 0">Formación</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcform}}</strong></td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippform}} </strong></td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippform > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippform > 89 and indpar.ippform <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippform < 90 and indpar.ippform >= 70 %} Aceptable {% endif %}
+                                    {% if indpar.ippform < 70 and indpar.ippform >= 50  %} Regular {% endif %}
+                                    {% if indpar.ippform < 50  %} Deficiente {% endif %}</strong>
+                                </td>
+                            
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Universitarios</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcUniv}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipUniv}}</td>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Técnicos Nivel Superior</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcTNS}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipTNS}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Técnicos Medios</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcTM}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipTM}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Obreros/Escuela oficio</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcOb}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipOb}}</td>
+                            </tr> 
+                            <tr>
+                                <th align="right" style="padding: 1em 0 1em 0;">Superación</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcsup}}</strong></td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippsup}}</strong></td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippsup >= 90 %} Buena {% endif %}
+                                    {% if indpar.ippsup < 90 and indpar.ippsup >= 70 %} Aceptable {% endif %}
+                                    {% if indpar.ippsup < 70 and indpar.ippsup >= 50  %} Regular {% endif %}
+                                    {% if indpar.ippsup < 50  %} Deficiente {% endif %}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Doctores</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcDrC}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipDrC}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Másters</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcMSc}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipMSc}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Espcialistas de Postgrado</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcEsPost}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipEsPost}}</td>
+                            </tr>
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 60%">Capacitación</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dccap}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippcap}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippcap > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippcap > 89 and indpar.ippcap <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippcap > 69 and indpar.ippcap < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippcap > 49 and indpar.ippcap < 70 %} Regular {% endif %}
+                                    {% if indpar.ippcap < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Cuadros capacitados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcCuadCap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipCuadCap}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Reserv. cuadros capacitados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcResCuad}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipResCuad}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Especialistas capacitados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcEspCap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipEspCap}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Productores capacitados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcPrdCap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipPrdCap}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Obreros capacitados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcOC}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipOC}}</td>
+                            </tr>
+                        </table>
+                    {% endfor %}    
+                </div>
+            </div></br>
+            <div class="row">
+                <div class="col-xl-12 col-sm-12 col-m-12">
+                    <h4 align="center" style="color: #074f"><strong>Organizativo/Estructural</strong></h4>
+                    {% for indpar in indparcorganiz %}
+                        <table> 
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 10%"></th>
+                                <th style="padding: 1em 0 1em 0; width: 20%">dinámica de crecimiento (%)</th>
+                                <th style="width: 30%">indice </th>
+                                <th style="width: 30%">evaluación</th>
+                            </tr>
+                            <tr>  
+                                <th style="padding: 1em 0 1em 0; width: 60%">Consejos Asesore y Entidades CTI</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcecta}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippecta}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippecta > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippecta > 89 and indpar.ippecta <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippecta > 69 and indpar.ippecta < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippecta > 49 and indpar.ippecta < 70 %} Regular {% endif %}
+                                    {% if indpar.ippecta < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Consejos Técnicos de Asesores</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dccta}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipcta}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Entiddaes de CTI</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcecti}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipecti}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Personas atienden actividad CTI</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpecti}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippecti}}</td>
+
+                            <tr>  
+                                <th style="padding: 1em 0 1em 0">Innovaciones</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcinnov}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippinnov}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippinnov > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippinnov > 89 and indpar.ippinnov <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippinnov > 69 and indpar.ippinnov < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippinnov > 49 and indpar.ippinnov < 70 %} Regular {% endif %}
+                                    {% if indpar.ippinnov < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Innovaciones propuestas a CTAs</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcipcta}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipipcta}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Innovaciones aceptadas por CTAs</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dciacta}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipiacta}}</td>
+                            </tr>
+                            
+                        </table>
+                    {% endfor %}
+                </div>
+            </div></br>
+            
+            <div class="row">
+                <div class="col-xl-12 col-sm-12 col-m-12">
+                    <h4 align="center" style="color: #074f"><strong>Sistema de programas y proyectos y su financiamiento</strong></h4>
+                    {% for indpar in indparcgest %}
+                        <table> 
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 10%"></th>
+                                <th style="padding: 1em 0 1em 0; width: 20%">dinámica de crecimiento (%)</th>
+                                <th style="width: 30%">indice </th>
+                                <th style="width: 30%">evaluación</th>
+                            <tr>    
+                            <tr>
+                                <th  style="padding: 1em 0 1em 0; width: 60%">Proyectos</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcproy}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippproy}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippproy > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippproy > 89 and indpar.ippproy <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippproy > 69 and indpar.ippproy < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippproy > 49 and indpar.ippproy < 70 %} Regular {% endif %}
+                                    {% if indpar.ippproy < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos Asociados a Programas</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippap}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos No Asociados a Programas</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpnap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippnap}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos de Colaboración Internacional</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpci}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippci}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos de Desarrollo Local</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpdl}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippdl}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos del Sector Productivo</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpsp}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippsp}}</td>
+                            </tr> 
+                            <tr>
+                                <th align="right" style="padding: 1em 0 1em 0; width: 60%">Financiamiento</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcfinan}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippfinan}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippfinan > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippfinan > 89 and indpar.ippfinan <= 100 %} Buena {% endif %}
+                                    {% if indpar.ippfinan > 69 and indpar.ippfinan < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippfinan > 49 and indpar.ippfinan < 70 %} Regular {% endif %}
+                                    {% if indpar.ippfinan < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos Asociados a Programas</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcfpap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipfpap}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos No Asociados a Programas</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcfpnap}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipfpnap}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos de Colaboración Internacional</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcfpci}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipfpci}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos de Desarrollo Local</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcfpdl}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipfpdl}}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Proyectos del Sector Productivo</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcfpsp}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipfpsp}}</td>
+                            </tr>
+                        </table>
+                    {% endfor %}    
+                </div>
+            </div></br>
+
+            <div class="row">
+                <div class="col-xl-12 col-sm-12 col-m-12">
+                    <h4 align="center" style="color: #074f"><strong>Innovación, Extensión y Divulgación</strong></h4>
+                    {% for indpar in indparcrelac %}
+                        <table> 
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 10%"></th>
+                                <th style="padding: 1em 0 1em 0; width: 20%">dinámica de crecimiento (%)</th>
+                                <th style="width: 30%">indice </th>
+                                <th style="width: 30%">evaluación</th>
+                            <tr>
+                            <tr>
+                                <th style="padding: 1em 0 1em 0; width: 60%">Introducción y Extensionismo de  </th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcritp}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippritp}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippritp > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippritp > 89 and indpar.ippritp < 101 %} Buena {% endif %}
+                                    {% if indpar.ippritp > 69 and indpar.ippritp < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippritp > 49 and indpar.ippritp < 70 %} Regular {% endif %}
+                                    {% if indpar.ippritp < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Resultados</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcrcla}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.iprcla}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Innovaciones</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcila}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipila}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Tecnologías</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dctec}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.iptec}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Procesos</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcproc}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipproc}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Producciones</strong></td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcprod}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipprod}}</td>
+                            </tr>
+                             <tr>
+                                <th style="padding: 1em 0 1em 0; width: 60%">Divulgación y publicación en</th>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.dcext}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>{{indpar.ippext}}</td>
+                                <td align="center" style="font-size: 1.1em"><strong>
+                                    {% if indpar.ippext > 100 %} Excelente {% endif %}
+                                    {% if indpar.ippext > 89 and indpar.ippext < 101 %} Buena {% endif %}
+                                    {% if indpar.ippext > 69 and indpar.ippext < 90 %} Aceptable {% endif %}
+                                    {% if indpar.ippext > 49 and indpar.ippext < 70 %} Regular {% endif %}
+                                    {% if indpar.ippext < 50  %} Deficiente {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Promociones, radio, Tv, prensa escrita</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcrdext}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.iprdext}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Libros, revistas, redes digitales</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcrrs}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.iprrs}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Redes, grupos y nodos de innovación</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcring}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipring}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Otras acciones extensionistas</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcaccext}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ipaccext}}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="font-size: 1.1em"><strong>Personas dedicadas al extensionismo y divulgación</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.dcpdiv}}</td>
+                                <td align="center" style="font-size: 1.1em">{{indpar.ippdiv}}</td>
+                            </tr>
+                        </table>
+                    {% endfor %}    
+                </div>
+            </div>    
+            </br><hr class="mt-1">
+
+        {% else %}    
+            <div class="card-body" align="center" style="width:80%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> NO SE HAN ESPECIFICADO DATOS DE NINGÚN TIPO EN LA PSIGC PARA LA EVALUACIÓN DEL SISTEMA INTEGRADO DE GESTIÓN DEL CONOCIMIENTO.</strong></div>
+            </div> 
+        {% endif %}
+    </div>
+</body>
+
+{%endblock%}

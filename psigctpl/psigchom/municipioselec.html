@@ -1,0 +1,35 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'psigchom/css/bootstrap.min.css' %}" type="text/css">
+
+<br>
+<select id="id_provincia" name="provincia">
+    {% for provincia in provincias %}
+        <option value="{{ provincia.idprov }}">{{ provincia.nombreprov }}</option>
+    {% endfor %}
+</select><p></p>
+
+<select id="id_municipio" name="municipio">
+    <option value="">---------</option>
+</select>
+
+<script>
+    $(document).ready(function() {
+        $('#id_provincia').change(function() {
+            var provId = $(this).val();
+            $.ajax({
+                url: '{% url "url_getmunics" %}',
+                data: {'provId': provId},
+                dataType: 'json',
+                success: function(data) {
+                    var municipios = data.municipios;
+                    var municipiosSelect = $('#id_municipio');
+                    municipiosSelect.empty();
+                    municipiosSelect.append($('<option>').text('---------').attr('value', ''));
+                    $.each(municipios, function(i, municipio) {
+                        municipiosSelect.append($('<option>').text(municipio.nombremun).attr('value', municipio.idmun));
+                    });
+                }
+            });
+        });
+    });
+</script>

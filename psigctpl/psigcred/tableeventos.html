@@ -1,0 +1,44 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% block content %}
+ 
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a> &raquo;<strong>Eventos</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        {% if eventosdata %}
+            <div class="row" style="padding: 5px"> 
+                {% for evento in eventosdata %}
+                <div class="col-lg-6" style="padding: 10px">
+                    <div class="card shadow" style="marging: 0px 0px 0px 20px">
+                        <div class="card-body" style="width:100%;">
+                            <h3 style="width: 100%; padding: 5px">  {{evento.titulo}} </h3>
+                            <p style="padding: 5px"> {{evento.descrip| slice:":100"}}...</p>
+                            <p><strong>Lugar: </strong> {{evento.lugar}} </p>
+                            <p><strong>Fecha de inicio: </strong> {{evento.fechainicio}} </p>
+                            <p><strong>Fecha de finalización: </strong> {{evento.fechafin}} </p>
+                            <p style="font-size:10px; padding:5px 5px">- publicado el {{evento.creado|date:"d-m-y" }}  
+                            {% if evento.autor %} por {{evento.autor}} {% endif %}
+                            {% if evento.autor.munic %}[{{evento.autor.munic}} ({{evento.autor.munic.prov }})]</p> {% endif %}.
+                            Entidad-Actor: {{evento.entidactor.nombrecorto }} 
+                        </div>    
+                    </div>
+                </div> 
+                {% endfor%} 
+            </div><br>
+        {% else %}
+            <div class="card-body" align="center" style="width:70%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No se han registrado eventos para los próximos días o próximas semanas.</strong></div>
+            </div>    
+        {% endif %}
+    </div> 
+</body>     
+{%endblock%}

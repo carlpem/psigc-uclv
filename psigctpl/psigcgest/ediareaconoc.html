@@ -1,0 +1,46 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_gestion'%}">Gestión</a>&raquo;<strong> 
+        {% if 'url_ediareaconoc' in request.path %} Modificar área del conocimiento {% else %} Adicionar área del conocimiento {% endif %}</strong></span>
+    </div>
+    <div id="content"> 
+        <div class="card shadow mb-4" style="width: 70%; padding: 1px 0px; margin: 10px auto;">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+                {% endfor %}
+            {% endif%}
+            <div class="card-body">
+                {% if 'url_ediareaconoc' in request.path %}
+                    <div style="text-align: center;"><h3 style="color: green">Modificar área del conocimiento</h3></div>
+                {% else %}    
+                    <div style="text-align: center;"><h3 style="color: green">Adicionar área del conocimiento </h3></div>
+                {% endif %}    
+
+                <form method='POST' action="" >
+                    {% csrf_token %}
+                    {{areaform | crispy }}
+                    <div align="center">
+                        {% if 'url_ediareaconoc' in request.path %}
+                            <button class="btn btn-success"  type="submit" style="height: 35px; padding: 5px 30px 0px" href="url_ediareaconoc"><p>ACTUALIZAR</p></button>
+                        {% else %}
+                            <button class="btn btn-success" type="submit" style="height: 35px; padding: 5px 30px 0px" href="{% url 'url_adiareaconoc' %}"><p>ADICIONAR</p></button>
+                        {% endif %}    
+                        <a class="btn btn-danger" type="submit" style="margin: 10px 100px; height: 35px; padding: 5px 30px 0px" href="{% url 'url_areaconocbd' %}"><p>CANCELAR</p></a>
+                    </div>
+                </form>
+                
+            </div>    
+        </div>
+    </div>    
+<body>
+
+{% endblock %}

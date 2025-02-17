@@ -1,0 +1,113 @@
+{% extends 'psigchom/base.html' %}
+
+
+{% block css %}  
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'psigchom/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'psigchom/css/select2.min.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'psigchom/styles.css' %}" type="text/css" />
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div id="sub-header">
+   <h2>Envíenos un mensaje contacto con sus opiniones, sugerencias o dudas</h2><h5>Ayúdenos a perfeccionar el software</h4>
+  </div>
+  <div id="breadcrumbs">
+    <span>Ud. está aquí: </span><a href="/">INICIO</a> &raquo;&nbsp;<strong> Procedencia</strong>
+  </div>
+  <div id="content">
+    <div class="row">
+      <div class="col-lg-6">
+          {{procedenForm.provincia.label}}</br>
+          <select id="id_provincia" class="form-control select2" required="True">
+            <option disabled selected="true" value="0">--Seleccione una provincia--</option>
+            {% for prov in providata %}
+              <option value="{{prov.idprov}}">{{prov.nombreprov}}</option> 
+            {% endfor %}                    
+          </select>    
+      </div>
+      <div class="col-lg-6">
+          {{procedenForm.municipio.label}} 
+          <select id="id_municipio" class="form-control select2"  required="True">
+            <option disabled selected="true" value="0">--Seleccione un municipio--</option>
+            {% for munic in municipdata %}
+              <option value="{{munic.idmun}}" data-chained="{{munic.prov_id}}">{{munic.nombremun }}</option> 
+            {% endfor %}  
+          </select>   
+      </div>
+    </div><br>
+    <!--form action="" method="POST" id="contactForm" getmunicipurl="{% url 'url_getmunicipios' %}"> 
+      {% csrf_token %}  
+      {{procedenForm.as_table}}
+      <p> (*) campo requerido </p>
+          <button class="btn btn-success" type="submit" style="width: 150px; margin: 20px 100px;">ENVIAR</button>
+    </form-->
+  </div>  
+{% endblock %}
+
+{% block js %}  
+
+  <script type="text/javascript" src="{% static 'psigchom/js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'psigchom/js/select2.min.js' %}"></script>
+  
+  <script>
+     S('#id_provincia').select2();
+  </script>
+  <script>
+    $(docuemnt).change(function(){
+      $("#id_provincia").change(function(){
+        const url=$("#contacForm").attr("getmunicipurl");
+        const provid=$(this).val();
+        $.ajax({
+          url: url,
+          data: { 'prov_id': provid },
+          success: function(data){
+          $("#id_municipio").html(data);
+          }
+        });
+      });
+    });  
+
+
+</script>
+
+{% endblock %}
+
+<!--script>
+
+  $(function(){
+    $("#id_municipio").chained("#id_provincia");
+  });
+
+</script-->
+
+<!--script>
+
+  $('.select2').select2({
+      theme:"boostrap"
+  });
+
+</script-->      
+
+<!--script>
+
+  $.fn.select2.default.set()
+
+</script-->
+
+
+<!--script>
+
+  $(document).ready(function(){
+    var $provId=$("#id_provincia");
+    var $muniId=$("#id_municipio");
+    var $options=$muniId.find('option');
+        $provId.('change', function(){
+          $muniId.html($options.filter('[value="'+this.value+'"]'));
+        }).trigger('change');
+  });
+
+</script-->  
+

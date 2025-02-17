@@ -1,0 +1,231 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'psigchom/css/all.min.css' %}" type="text/css">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'psigchom/js/jquery.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'psigchom/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'psigchom/js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <body class="noheader">
+        <div id="breadcrumbs">
+            <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_basesdatos'%}">Datos</a> &raquo;<a href="{% url 'url_ejesbd'%}">Ejes</a> &raquo;<strong>
+                {%  if 'url_ediejeinfo' in request.path %} Modificar registro de datos {% else %} Adicionar registro de datos {% endif %}</strong></span>
+        </div>  
+        <div id="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+                {% endfor %} 
+                {% if errores %}
+                 {{errores}}
+                {% endif %}
+            {% endif %}
+            <div style="text-align: center;"><h3 style="color: green">
+            {% if 'url_ediejeinfo' in request.path %}Modificar registro de datos primarios {% else %}Adicionar registro de datos primarios {% endif %}</h3></div>
+            <form method='POST' style="padding: 1px 0px; margin: 10px auto;" action="">
+                {% csrf_token %}
+                <div class="content" style="width:100%; padding: 0 1.5em 0">
+                    <div class="row ">
+                        <div class="col-lg-5">{{dataform.entidactor.label}} {{dataform.entidactor }} </div>
+                        <div class="col-lg-4">{{dataform.munic.label }} {{dataform.munic }} </div>
+                        <div class="col-lg-3">{{dataform.fechaRegist.label}} {{dataform.fechaRegist }} </div>
+                        <div style="margin: 0 1em; padding:  0.1em 0 2em; height:1em; width:1.5em"> {{dataform.fechabase }}</div>{{dataform.fechabase.label}}
+                    </div> <hr class="mt-1">
+                    <div class="row mt-1">
+                        <div class="col-lg-6 d-flex justify-content-left mt-1"><strong>Elija el eje para editar los datos</strong></div>
+                        <div class="col-lg-6 d-flex justify-content-right mt-1">
+                            <div style="padding: 0px; marging text-align: right">
+                                <button class="btn btn-success" type="submit" style="height: 20px; padding: 0px 10px 25px 10px" href="url_ediejeinfo"><p>Guardar registro</p></button>
+                                <a class="btn btn-secondary" style="height: 20px; padding: 0px 10px 25px 10px" href="{% url 'url_ejesbd'  %}"><p>Regresar a tabla de registros</p></a>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="container d-flex justify-content-left mt-1">
+                        <div style="width:100%" class="row">
+                            <div style="width:100%; padding:5px 0px 0px 0px" class="col-md-12 border shadow">
+                                <ul class="nav nav-pills nav-justify" role="tablist" style="font-size:14px">
+                                    <li class="nav-item"><a class="nav-link active" href="#formac" aria-controls="formac" data-toggle="pill">Eje Intelectual</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#estruct" aria-controls="estruct" data-toggle="pill">Eje Organizacional</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#invest" aria-controls="invest" data-toggle="pill">Eje Investig./Gestión</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#extens" aria-controls="extens" data-toggle="pill">Eje Innov./Relacional</a></li>
+                                </ul>
+                                <div class="row" style="margin:0 2em">
+                                    <div class="col-lg-12" >
+                                        <div class="row">
+                                            <div class="col-lg-4" style="text-align:left">Personas participantes</div>
+                                            <div class="col-lg-4" style="text-align:center">Grupos de edades</div>
+                                        </div>
+                                    </div>    
+                                    <div class="col-lg-12">  <div class="row">
+                                        <div class="col-sm-2" style="margin:0 4em 0.01em 0">{{dataform.cantMujeres.label}} {{dataform.cantMujeres }}</div>
+                                        <div class="col-sm-2">18 - 35 {{dataform.cant18_35}} </div>
+                                        <div class="col-sm-2">36 - 55 {{dataform.cant36_55}} </div>
+                                        <div class="col-sm-2">55 - 70 {{dataform.cant56_70}} </div>
+                                        <div class="col-sm-2">+ 70 {{dataform.cant_70}} </div>
+                                    </div></div>   <hr class="mt-1" align="center" style="width:50.5em"> 
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane show fade active p-2" id="formac">
+                                        <h4 style="font-size:15px"><strong>Formacion, Superación y Capacitación</strong></h4>
+                                        <div class="row">  
+                                            <div class="col-lg-4">
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body"  style="paddig: 20px 50px">
+                                                        <h3 style="text-align: center; font-size:17px; color: green"><strong>Formación</strong></h3>
+                                                        <p style="text-align: center">(Escolaridad)</p>
+                                                        {{dataform.cantUniv.label}} {{dataform.cantUniv}} 
+                                                        {{dataform.cantTNS.label}} {{dataform.cantTNS}} 
+                                                        {{dataform.cantTM.label}} {{dataform.cantTM}} 
+                                                        {{dataform.cantOb.label}} {{dataform.cantOb}} 
+                                                    </div>    
+                                                </div>    
+                                            </div>     
+                                            <div class="col-lg-4">   
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body" >
+                                                        <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Superación</strong></h3>
+                                                        <p style="text-align: center">(Postgrado)</p>
+                                                        {{dataform.cantDrC.label}} 
+                                                        {{dataform.cantDrC}}
+                                                        {{dataform.cantMSc.label}} 
+                                                        {{dataform.cantMSc}}
+                                                        {{dataform.cantEsPost.label}} 
+                                                        {{dataform.cantEsPost}}
+                                                    </div>    
+                                                </div>    
+                                            </div>
+                                            <div class="col-lg-4">    
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body" >
+                                                        <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Capacitación</strong></h3>
+                                                        <p style="text-align: center">(Curso,Taller,Entrenamiento)</p><br>
+                                                        {{dataform.cantCuadCap.label}} 
+                                                        {{dataform.cantCuadCap}}
+                                                        {{dataform.cantResCuad.label}} 
+                                                        {{dataform.cantResCuad}}
+                                                        {{dataform.cantEspCap.label}} 
+                                                        {{dataform.cantEspCap}}
+                                                        {{dataform.cantPrdCap.label}} 
+                                                        {{dataform.cantPrdCap }}
+                                                        {{dataform.cantOC.label}} 
+                                                        {{dataform.cantOC}}
+                                                    </div>    
+                                                </div> 
+                                            </div>      
+                                        </div> <br>       
+                                    </div>
+                                    <div class="tab-pane fade p-2 " id="estruct">
+                                        <h4 style="font-size:15px"><strong>Estructura institucional y Organización</strong></h4>
+                                        <div class="row" style="text-align: right"><div class="col-lg-3">Personas que atienden actividad CTI {{dataform.cantPECTIC}} </div></div><br>
+                                        <div class="row">  
+                                            <div class="col-lg-4">
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body"  style="paddig: 20px 50px">
+                                                        <h3 style="text-align: center; font-size:17px; color: green"><strong>Consejos Técnicos Asesores</strong></h3>
+                                                        <p style="text-align: center">(CTAs)</p>
+                                                        Dedicados al programa: {{dataform.cantCTA}}     
+                                                    </div>    
+                                                </div>    
+                                            </div>     
+                                            <div class="col-lg-4">   
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body" >
+                                                        <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Innovaciones</strong></h3>
+                                                        Propuestas a CTAs {{dataform.cantIP_CTA}} 
+                                                        Avaladas por CTAs {{dataform.cantIA_CTA}}
+                                                    </div>    
+                                                </div>    
+                                            </div>
+                                            <div class="col-lg-4">    
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body" >
+                                                        <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Entidades de Ciencia y Tecnología</strong></h3>
+                                                        <p style="text-align: center">(ECTICs)</p>
+                                                        {{dataform.cantECTI.label}} 
+                                                        {{dataform.cantECTI}}
+                                                        
+                                                    </div>    
+                                                </div> 
+                                            </div>      
+                                        </div> <br>  
+                                    </div>
+                                    <div class="tab-pane fade p-2" id="invest">
+                                        <h4 style="font-size:15px"><strong>Sistemas de Programas y Proyectos y su Financiamiento</strong></h4>
+                                        <div class="row">  
+                                            <div class="col-lg-12">
+                                                <div class="card shadow bm-1">
+                                                    <div class="row"> 
+                                                    <div class="col-lg-7">
+                                                        <div class="card-body"  style="paddig: 20px 50px">
+                                                            <h3 style="text-align: center; font-size:17px; color: green"><strong>Proyectos de Investigación</strong></h3>
+                                                            {{dataform.cantPAP.label}} {{dataform.cantPAP}}
+                                                            {{dataform.cantPNAP.label}} {{dataform.cantPNAP}}
+                                                            {{dataform.cantPCI.label}} {{dataform.cantPCI}}
+                                                            {{dataform.cantPDL.label}} {{dataform.cantPDL}}
+                                                            {{dataform.cantPCP.label}} {{dataform.cantPCP}}
+                                                            {{dataform.cantPSP.label}} {{dataform.cantPSP}}
+                                                        </div>
+                                                    </div>    
+                                                    <div class="col-lg-5">    
+                                                        <div class="card-body" >
+                                                            <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Financiamiento</strong></h3>
+                                                                PAP: {{dataform.finanPAP}}
+                                                                PNAP: {{dataform.finanPNAP}}
+                                                                PCI: {{dataform.finanPCI}}
+                                                                PDL: {{dataform.finanPDL}}
+                                                                PSP: {{dataform.finanPSP}}
+                                                        </div>
+                                                    </div> 
+                                                </div>      
+                                                </div>    
+                                            </div>                                                 
+                                        </div>    
+                                    </div>
+                                    <div class="tab-pane fade p-2" id="extens">
+                                        <h4 style="font-size:15px"><strong>Innovación, introducción de resultados, extension y divulgación</strong></h4>
+                                        <div class="row">  
+                                            <div class="col-lg-6">
+                                                <div class="card shadow bm-1">
+                                                    <div class="card-body"  style="paddig: 20px 50px">
+                                                        <h3 style="text-align: center; font-size:17px; color: green"><strong>Introducción de innovaciones y resultados</strong></h3>
+                                                        {{dataform.cantRCLA.label}} {{dataform.cantRCLA}}
+                                                        {{dataform.cantILA.label}} {{dataform.cantILA}}
+                                                        {{dataform.cantTec.label}} {{dataform.cantTec}}
+                                                        {{dataform.cantProc.label}} {{dataform.cantProc}}
+                                                        {{dataform.cantProd.label}} {{dataform.cantProd}}
+                                                    </div>
+                                                </div>
+                                            </div>       
+                                            <div class="col-lg-6">
+                                                <div class="card shadow bm-1">    
+                                                    <div class="card-body" style="paddig: 20px 50px">
+                                                        <p><h3 style="text-align: center; font-size:17px; color: green"><strong>Extensionismo y divulgación</strong></h3>
+                                                            Resultados en TV, radio, prensa escrita, promociones: {{dataform.cantRDExt}}
+                                                            {{dataform.cantRRS.label}} {{dataform.cantRRS}}
+                                                            {{dataform.cantAccExt.label}}{{dataform.cantAccExt}}
+                                                            {{dataform.cantRING.label}} {{dataform.cantRING}}
+                                                            {{dataform.cantPDiv.label}} {{dataform.cantPDiv}}
+                                                    </div>
+                                                </div>    
+                                            </div>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>    
+                    </div>
+                </div>
+            </form>    
+        </div>
+    </body>
+{% endblock %}
+
+

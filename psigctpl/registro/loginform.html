@@ -1,0 +1,25 @@
+{% load static %}
+
+{% load crispy_forms_tags %}<br>
+{% if messages %}
+  {% for msg in messages %}
+    <div  align="center" ><span class="alert alert-danger {{msg.tags}}">{{msg}}</span></div></br></br>
+  {% endfor %}
+{% endif %}
+<div class="card shadow mb-4" style="width: 60%; padding: 1px 0px; margin: 10px auto;">
+
+  <div class="card-body">
+    <form method="POST" action="" >
+      {% csrf_token %}
+
+      {{regform | crispy}}
+      <p>(*) campo obligatorio </p>
+
+      <input class ="btn btn-success" type="submit" style="padding: 0px 50px 0px" value="ENTRAR" href="{% url 'url_inicio' %}" >
+      <a style="" href="#"><strong>¿Olvidó la contraseña?</strong></a> <br> <br>
+
+    </form>
+  </div>
+</div>  
+                
+        

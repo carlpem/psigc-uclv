@@ -1,0 +1,89 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    {% if 'url_codigo' in request.path %} 
+      <div id="sub-header">
+    		<h2>La ética proviene del griego "Ethikos" cuyo significado es "Carácter".</h2><h5>Más que una moda, la Ética es una necesidad</h4>
+      </div>
+      <div id="breadcrumbs">
+          <span>Ud. está aquí: </span><a href="/">INICIO</a> &raquo;&nbsp;<strong>Código de ética</strong>
+      </div>
+    {% else %} 
+      <div id="sub-header">
+        <h2>Mantener informado al usuario en todo momento</h2><h5>uno de los 10 principios de la buena usablidad del software</h4>
+      </div>
+      <div id="breadcrumbs">
+        <span>Ud. está aquí: </span><a href="/">INICIO</a> &raquo;&nbsp;<strong>Ayuda</strong>
+      </div>
+    {% endif %}      
+    <div id="content">
+      {% if 'url_codigo' in request.path %} 
+       
+        <h3>CÓDIGO DE ÉTICA <strong>PSIGC</strong></h3> 
+        <p>El carácter crecientemente global de Internet y de la World Wide Web requiere de normas morales globales y de responsabilidad profesional. 
+          Los códigos de ética son las directrices del comportamiento que deben tener todos los miembros en una organización, destacando los valores, la misión y la visión de esta. 
+          Estos lineamientos son importantes para la toma de decisiones, desde las más estratégicas hasta las más básicas.</p>
+        <p>El objetivo principal de este <strong>CÓDIGO DE ÉTICA</strong> radica en:</p>
+        <i><p>- Proteger tanto la privacidad de la PSIGC como la de sus usuarios.</p> 
+        <p>- Respetar la confidencialidad y confianza que brindan los usuarios y participantes en la PSIGC y personas en general.<p>
+        <p>- Respetar la propiedad intelectual y proteger la vida legal de las ideas planteadas en la PSIGC.</p> 
+        <p>- Respetar la integridad física y moral de todos los que participan o no en esta plataforma.</p></i><br>
+        
+        <p> La <strong>P</strong>lataforma del <strong>S</strong>istema <strong>I</strong>ntegral de la <strong>G</strong>estión del <strong>C</strong>onocimento (PSIGC)
+          se estableció con el principal objetivo de <strong>EVALUAR</strong> la propia GESTIÓN DEL CONOCIMIENTO y que pueda ayudar en la toma de decisiones, por parte de los actores encargados de organizar y gestionar el conocimiento en aquellos municipios
+          donde se esté aplicando el proyecto (SIGC para el CONSAS) para el cual fue creado originalmente. Además, se garantiza y fomenta el debate y el intercambio de información entre las diferentes
+          áreas del conocimento, ya sea de carácter científico, tecnológico, educacional, social, extensionista, administrativo y social.</p>
+        <p> Por su diseño, esta PSIGC puede ampliarse a cualquier tipo de proyecto de cualquier programa de desarrollo, por tanto, es en función de la consecución de estos objetivos, 
+          y con el ánimo de garantizar el uso apropiado de la PSIGC, que se establece el presente <u>Código de Ética</u> y de estricto cumplimiento por todos los usuarios de la plataforma.</p><br>
+          
+        <p> <strong>*_</strong> Hacer uso de la PSIGC en interés de sus objetivos y funciones dentro del(os) proyecto(s) donde se apliquen sus funcionalidades:</p>
+        <p> <strong>*_</strong> Preservar el patrimonio de la información  o cualquier otro contenido o estructura que se genere a través de la PSIGC o en representación de ella en Cuba u otro país cualquiera.</p>
+        <p> <strong>*_</strong> Ser responsable por el uso de la cuenta creada y niveles de acceso a la información y sus servicios, así como velar por el cumplimiento de las políticas establecidas para la gestión de identificadores y claves de acceso.</p>
+        <p> <strong>*_</strong> Responder por el contenido de los mensajes trasmitidos, así como respetar los criterios del resto de los usuarios
+        <p> <strong>*_</strong> No utilizar los servicios de la PSIGC para transmitir, acceder, o difundir información obscena o pornográfica, subversiva, terrorista o contrarrevolucionaria, difamatoria o que su contenido comprometa la
+          seguridad nacional y en general con fines lesivos a los intereses de la sociedad, la Institucionalidad, la Revolución o tercero. Evitar realizar enlaces a otros sitios que violen estas normas y principios éticos,</p>
+        <p>  No utilizar los servicios de la PSIGC con fines lucrativos, ilícitos de carácter personal.</p>
+        <p> <strong>*_</strong> No realizar cualquier tipo de ataque a la seguridad informática de la PSIGC, así como el envío o reenvío de mensajes masivos (SPAMS) con información intrascendente, de
+        supuestos alertas, cartas cadenas, etc.</p>
+        <p> <strong>*_</strong> Los usuarios responsables de brindar los servicios presentes en la "Red de conocimiento" (noticias, eventos, foros...) deben ser discretos con relación a la información
+        que se comparte y el uso de la PSIGC para la prestación de dichos servicios, proteger los derechos propiedad intelectual y otras licencias de carácter propietario.</p><br>
+        
+        <p> La administración de la PSIGC se reserva la facultad de sancionar, desactivar o eliminar a los usuarios que incumplan con este Código de Ética.</p>
+          
+      {% else %}
+            <h3>MANUAL DEL USUARIO</h3> <p><span style="align: rigth;">Descargar versión .PDF  <a href="{% static 'ManualPSIGC.pdf' %}"><img  style="width: 40px" src="{% static 'images/pdf.png' %}"></a></span></p>
+
+            <p><strong>1.	OBJETIVO DEL DOCUMENTO.</strong></br></br>
+            El manual de usuario debe ser diligenciado durante toda la etapa de construcción del software y a medida que se van desarrollando nuevas funcionalidades y entregando las diferentes versiones. Debe ser socializado con el líder funcional del proyecto para su aprobación y de ser posible incluirlo como una ayuda en línea de dicho sistema.</br>
+            El objetivo de este documento es brindar a los usuarios finales del software una ayuda sobre el modo de navegación y uso de las diversas funcionalidades del sistema, así como orientarlos en la captación y obtención de datos y resultados que se gestionan durante la explotación del software.</br></br>
+            <strong>2.	ALCANCE DEL DOCUMENTO.</strong></br></br>
+            Este documento describe el contenido siguiendo los lineamientos de MINTIC y las políticas de gobierno digital, así como su formalización en el Sistema Integrado de Gestión del Conocimiento (SIGC) para la Soberanía Alimentaria y Seguridad Alimentaria y Nutricional (SSAN).</br></br>
+            <strong>3.	SOBRE EL SOFTWARE PSIGC.</strong></br></br>
+            El software PSIGC está concebido principalmente para registrar datos, calcular indicadores y analizar resultados relacionados con la situación y las necesidades en materia de conocimiento e innovación a nivel municipal, para ser aplicados en el SIGC que se formula en la SSAN en Cuba.
+            Los elementos básicos para el cálculo de indicadores se expresan sobre la base de cuatro (4) ejes: <strong>(1)</strong>formación de capacidades intelectuales,<strong> (2)</strong>organización funcional y estructura, <strong> (3)</strong>gestión de proyectos y su financiamiento y <strong>(4)</strong>innovación, procesos extensionistas y divulgación. Cada uno de estos ejes derivará en su índice correspondiente
+            (cuatro índices municipales) por un período determinado (3 meses, 6 meses, 1 año, etc.). El análisis de los resultados permitirá constatar los avances y fortalezas, así como retrocesos y limitaciones locales y territoriales respecto de la gestión del conocimiento y la innovación. Además, asiste en la toma de decisiones para hacer las correcciones 
+            pertinentes en las estrategias, políticas, planes y proyectos específicos que repercutan en el desarrollo local y se avance en cualquiera de los cuatro (4) o todos los ejes.
+            El software permite también, a partir de su divulgación, conocer sobre todos los eventos, debates y resultados introducidos, los cuales se hayan logrado dentro del marco de este proyecto. La red de conocimiento que origina este software permitirá tener actualizado a sus usuarios de todo el quehacer científico técnico y extensionista en el marco de la SSAN.</br></br>
+            <strong>4.	REQUISITOS DE EXPLOTACIÓN DEL SOFTWARE. DESPLIEGUE Y PÁGINA INICIAL.</strong></br></br>
+            El primer requerimiento que el usuario debe tener en cuenta es asegurar que la computadora o dispositivo de comunicación posea conexión de red a la intranet nacional, o sea, que pueda tener acceso a las direcciones internet de protocolo de transporte de hipertexto (http, por sus siglas en inglés) con terminación en “.cu”.</br>
+            El software se desarrolló para ser desplegado desde cualquier navegador de páginas web mediante protocolo http, o sea, la aplicación constituye un sitio web con dirección (url): http://www.cigcssan.uclv.cu. Por tanto, otro requerimiento es poseer un navegador web en el dispositivo de comunicación donde debe desplegarse el software para su explotación. 
+            La versión del navegador no es un requisito indispensable, pero mientras más actualizado esté el navegador, mejor será la experiencia de interactividad con el software. Son necesarios conocimientos mínimos sobre la navegación web mediante textos de enlaces (hipertextos), el trabajo sobre menús y botones de acción y el desplazamiento.
+            Una vez lanzada la url anterior será mostrada, en la ventana del navegador, la página inicial o de bienvenida del software al usuario (Figura 1).</p></br>
+            <p><img src="{% static 'images/ayudaimg/homepage.png' %}"></p>
+            Figura 1: Página inicial del sitio o software PSIGC.</br></br>
+            <p>La estructura principal de las páginas del sitio está conformada por los siguientes elementos.</br>
+            <ul>1.	Encabezado de la página: es común a todas las páginas del software, constituye el elemento identificativo con las siglas y un slogan refiriendo el objetivo principal del sistema.</ul>
+            <ul>2.	 Barra de menú: también común a todas las páginas y contiene todas las opciones de navegación por las diferentes funcionalidades del software.</ul>
+            <ul>3.	Contenedor promocional: solamente es visible en la página inicial o de bienvenida. En esta área se muestran los mensajes promocionales, noticias destacadas, eventos importantes y demás publicaciones que resulten de interés para conocimiento de los usuarios. Estas publicaciones pueden ser leídas con más detalles a partir de las opciones del menú “Red de conocimiento”.</ul>
+            <ul>4.	Área de trabajo: es la sección donde se mostrarán los resultados de las acciones derivadas de la navegación por los menús seleccionados o botones presionados.</ul>
+            <ul>Área de menú contextual: es la sección ubicada a la derecha del área de trabajo que contiene los diferentes menús contextuales, cuyas opciones estarán ocultas o visibles en dependencia del contenido del área de trabajo.</ul>
+            <ul>5.	 Formulario de inicio o registro de usuario: está ubicado en el panel de menús contextuales. Si el visitante no ha iniciado una sesión de trabajo como usuario registrado en el sitio, se mostrará un formulario para iniciar sesión, o bien puede registrase como nuevo usuario a través del enlace justo debajo identificado con la palabra “Registrarse”.</ul>
+            <ul>6.	Menú de navegación rápida: es una sección permanente y común a todas las páginas para referenciar los accesos del sitio más utilizados y sean de rápido acceso.</ul>
+            <ul>7.	Pie de página: sección de la página común para todo el sitio donde se pueden encontrar información y enlaces adicionales para complementar con de interés para todos los usuarios.</ul> </p>
+      {% endif %}
+    </div>     
+
+{%endblock%}

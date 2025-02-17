@@ -1,0 +1,50 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red de conocimiento</a> &raquo;<strong>Expertos</strong></span>
+    </div>    
+    <div id="content"><br>
+        {% if expertossdata %}
+            <div class="card-body">
+                <h4><strong>Consultores y Expertos del PSIGC</strong> </h4>
+                <div class="table table-striped table-hover table-reponsive">
+                    <table>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombres y Apellidos</th>
+                            <th>Municipio</th>
+                            <th>Área(s) del conocimiento</th>                       
+                        </tr>
+                            {% for experto in expertossdata %}
+                            <tr> 
+                                {% if not experto.username == 'psigcuser' or not experto.username == 'admin' %}
+                                    <td><p>{{experto.username}}</p></td>
+                                    <td><p>{{experto.first_name}} {{experto.last_name}} </p></td>
+                                    <td>{% if experto.municipio %}<p>{{experto.municipio}}</p> {% endif %}</td>
+                                    <td> 
+                                        {% for area in experto.areaconocimiento_set.filter %}
+                                            <p>. {{area.nombreareaconoc}} </p>
+                                        {% endfor %}
+                                    </td>
+                                    
+                                {% endif %}    
+                            {% endfor%}
+                        </tr>    
+                    </table>
+                </div>    
+            </div>
+        {% else %}
+            <div class="card-body" align="center" style="width:70%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> Aún no existen consultores o expertos registrados en la base de datos.</strong></div>
+            </div> 
+        {% endif %}    
+    </div> 
+</body>     
+{% endblock %}

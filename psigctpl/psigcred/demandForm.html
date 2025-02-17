@@ -1,0 +1,34 @@
+{% extends 'psigchom/main.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <body class="noheader">
+    <div id="breadcrumbs">
+      <span>Ud. está aquí:</span><a href="{% url 'url_inicio'%}">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red de conocimiento</a>&raquo;<strong>Solicitud de demanda</strong>
+    </div>    
+    <div id='content'>
+        <div class="card shadow mb-4" style="width: 80%; padding: 1px 0px; margin: 10px auto;">
+          <div class="card-body">  
+
+            <h4 class="card-title" style="align: center;" aria-hidden="true"><strong>Formulario para enviar solicitud de demanda</strong></h4>
+            {% if messages %}
+              {% for msg in messages %}
+                  <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
+              {% endfor %}
+            {% endif%}
+            <form action="" method="Post" action="" >
+              {% csrf_token %}
+              {{demform | crispy }}
+              <p> (*) campo requerido </p>
+              <button class="btn btn-success" type="submit" style="width: 100px; margin: 10px 150px;" href="{% url 'url_envdemanda' %}">Enviar</button>
+            </form>    
+          </div>
+      </div><br>
+    </div>
+  </body>    
+  
+{%endblock%}

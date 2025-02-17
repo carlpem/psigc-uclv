@@ -1,0 +1,19 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_basesdatos'%}">Datos</a> &raquo;<strong>Programas de desarrollo</strong></span>
+    </div>    
+    <div id="content"><br>
+        
+        {% include 'psigcmod/tableprgdesarr.html' %}
+      
+    </div> 
+</body>     
+{%endblock%}

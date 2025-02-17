@@ -1,0 +1,42 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a> &raquo;<strong>Noticias</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert" >{{msg}}</div>
+            {% endfor %}
+        {% endif%}
+        {% if noticiasdata %}
+            <div class="row" style="padding: 5px"> 
+                {% for noticia in noticiasdata %}
+                <div class="col-lg-4" style="padding: 10px">
+                    <div class="card shadow bm-2" style="marging: 0px 0px 0px 20px">
+                        <div class="card-body" style="width:100%; height:50%">
+                            <h3 style="width: 98%; padding: 5px">  {{noticia.titulo}} </h3>
+                            <p style="padding: 5px"> {{noticia.contenido| slice:":100"}}...</p>
+                            <div align="right"><a class="btn btn-info" style="margin: 0px 10px; padding: 0px 5px" href="{% url 'url_leernoticia' noticia.idpost %}"><p>Leer más...</p></a></div>
+                            <p style="font-size:10px; padding:5px 5px">- publicado el {{noticia.creado|date:"d-m-y" }} 
+                                {% if noticia.autor %} por {{noticia.autor}} {% endif %}  
+                                {% if noticia.autor.municipio %}<p style="font-size:10px; padding:5px 5px">[{{noticia.autor.municipio}} ({{noticia.autor.municipio.prov }})]{% endif %}.
+                                {% if noticia.entidactor %} Entidad-Actor: {{noticia.entidactor.nombrecorto }} {% endif %}</p>   
+                        </div>    
+                    </div>
+                </div> 
+                {% endfor%} 
+            </div><br>
+        {% else %}    
+            <div class="card-body" align="center" style="width:70%; margin: auto">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"><strong> No hay noticias divulgadas.</strong></div>
+            </div>    
+        {% endif %}
+    </div> 
+</body>     
+{%endblock%}

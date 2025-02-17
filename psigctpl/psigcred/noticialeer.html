@@ -1,0 +1,29 @@
+{% extends 'psigchom/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+<body class="noheader">
+    <div id="breadcrumbs">
+        <span>Ud. está aqui :</span><a href="index.html">INICIO</a> &raquo;<a href="{% url 'url_redconoc'%}">Red del conocimiento</a>&raquo;<a href="{% url 'url_noticia'%}">Noticias</a>&raquo;<strong>Detalle de la noticia</strong></span>
+    </div>
+    <div id="content"><br>
+        {% if leernoticia %}
+            <div align="right"><a class="btn btn-success" style="margin: 0px 10px; padding: 5px 5px" href="{% url 'url_noticia'%}"><p><strong>Regresar a noticias...</strong></p></a></div>
+            <div class="col-lg-20" style="padding: 10px">
+                <div class="card shadow bm-2">
+                    <div class="card-body" style="">
+                        <h2 style="width: 98%; padding: 5px">  {{leernoticia.titulo}} </h2>
+                        <p style="padding: 5px"> {{leernoticia.contenido}}</p>
+                        <p style="font-size:10px; padding:5px 5px">- publicado el {{leernoticia.creado|date:"d-m-y" }} por {{leernoticia.autor}} {% if leernoticia.autor.municipio %} [{{leernoticia.autor.municipio}} ({{leernoticia.autor.municipio.prov }})] {% endif %}
+                        {% if leernoticia.entidactor %} Entidad-Actor: {{leernoticia.entidactor}} {% endif %}</p>
+                    </div>    
+                </div>
+            </div> 
+        {% endif %}
+    </div> 
+</body>     
+{%endblock%}
